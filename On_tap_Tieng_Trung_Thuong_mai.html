@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Ôn Tập Tiếng Trung Thương Mại</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700&display=swap">
+<style>
+/* Layout: một cột hẹp như tờ đề thi; thẻ câu hỏi xếp dọc, thanh nộp bài cố định ở đáy.
+   Màu: xanh mực làm màu chính, đỏ ấn chương chỉ dùng cho con dấu và lỗi sai. */
+:root{
+  --bg:#F1F4F8; --surface:#FFFFFF; --ink:#15202B; --muted:#5A6B7C; --line:#D8E0E8;
+  --accent:#2B47A0; --accent-ink:#FFFFFF; --accent-soft:#E7ECF9;
+  --ok:#17794A; --ok-soft:#E2F4EA; --bad:#BF3A30; --bad-soft:#FBE8E5; --seal:#C0392F;
+  --font-ui:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,sans-serif;
+  --font-zh:"Noto Sans SC","PingFang SC","Microsoft YaHei","Hiragino Sans GB",sans-serif;
+  --font-seal:"Noto Serif SC","Songti SC","SimSun",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E141B; --surface:#161F29; --ink:#E6ECF2; --muted:#98A8B8; --line:#2A3846;
+  --accent:#9DB2FF; --accent-ink:#0E141B; --accent-soft:#1D2A4A;
+  --ok:#62D69A; --ok-soft:#11301F; --bad:#FF8F85; --bad-soft:#3A1C19; --seal:#D9493D; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E141B; --surface:#161F29; --ink:#E6ECF2; --muted:#98A8B8; --line:#2A3846;
+  --accent:#9DB2FF; --accent-ink:#0E141B; --accent-soft:#1D2A4A;
+  --ok:#62D69A; --ok-soft:#11301F; --bad:#FF8F85; --bad-soft:#3A1C19; --seal:#D9493D; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:1.5;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button:disabled{cursor:default}
+.zh{font-family:var(--font-zh);font-size:1.12em;letter-spacing:.02em}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:16px 120px}
+small{font-size:.8em}
+
+/* ---------- chung ---------- */
+.btn{min-height:46px;padding:10px 18px;border-radius:12px;font-weight:600;border:1.5px solid var(--line);background:var(--surface);transition:background .15s}
+.btn:hover{background:var(--accent-soft)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08);background:var(--accent)}
+.btn.wide{width:100%}
+.chip{min-height:38px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--surface);font-weight:500}
+.chip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.py{display:block;color:var(--muted);font-style:italic;font-size:.82em;line-height:1.35;margin-top:2px}
+.vi{display:block;color:var(--muted);font-size:.84em;line-height:1.4;margin-top:2px}
+
+/* ---------- trang chủ ---------- */
+.hero{display:flex;gap:14px;align-items:center;margin-bottom:6px}
+.stamp{flex:none;width:54px;height:54px;border-radius:8px;background:var(--seal);color:#fff;display:grid;place-items:center;font-family:var(--font-seal);font-size:30px;transform:rotate(-4deg);box-shadow:inset 0 0 0 3px rgba(255,255,255,.28)}
+h1{font-size:1.45rem;line-height:1.2;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:4px 0 0}
+.start{margin-block:16px 22px}
+.parts{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:560px){.parts{grid-template-columns:1fr 1fr}}
+.pcard{text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:4px;min-width:0}
+.pcard:hover{border-color:var(--accent)}
+.pcard .ph{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.pcard b{font-size:1.02rem}
+.pcard .cnt{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.pcard .pd{color:var(--muted);font-size:.88rem}
+.pcard .best{font-size:.82rem;color:var(--ok);font-weight:600}
+h2{font-size:1rem;margin:26px 0 10px;letter-spacing:.01em}
+.panel{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:6px 16px}
+.tg{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.tg:last-child{border-bottom:0}
+.tg span small{display:block;color:var(--muted)}
+.sw{flex:none;width:48px;height:28px;border-radius:999px;background:var(--line);position:relative;transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .15s}
+.sw.on{background:var(--accent)}
+.sw.on::after{transform:translateX(20px)}
+.hist{display:grid;gap:0}
+.hrow{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.hrow:last-child{border-bottom:0}
+.hrow time{color:var(--muted);font-size:.8rem;display:block}
+.hrow b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.linkbtn{color:var(--muted);text-decoration:underline;padding:10px 0;font-size:.85rem}
+
+/* ---------- làm bài ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar>div{max-width:720px;margin:0 auto;padding:8px 16px;display:flex;align-items:center;gap:10px}
+.bar .t{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghost{min-height:38px;padding:4px 8px;font-weight:600;color:var(--accent)}
+.sec{margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sec:first-child{margin-top:4px}
+.sec b{font-size:1.05rem}
+.sec span{color:var(--muted);font-size:.85rem}
+.gh{background:var(--accent-soft);border-radius:12px;padding:10px 14px;margin:16px 0 10px}
+.gh b{display:block;margin-bottom:6px}
+.bankl{display:flex;flex-wrap:wrap;gap:6px 14px}
+.bankl span{display:inline-block}
+.psg{background:var(--surface);border:1.5px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;margin:16px 0 10px}
+.psg b{display:block;color:var(--accent);margin-bottom:6px}
+.psg p{margin:0 0 4px;font-size:1.05rem;line-height:1.8}
+.psg details{margin-top:8px}
+.psg summary,.fb summary{cursor:pointer;color:var(--accent);font-weight:600;min-height:32px}
+.q{background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;scroll-margin-top:70px}
+.q.rok{border-color:var(--ok)}
+.q.rbad{border-color:var(--bad)}
+.qh{display:flex;gap:10px;align-items:flex-start}
+.qn{flex:none;min-width:30px;height:30px;border-radius:8px;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center;font-size:.85rem;font-variant-numeric:tabular-nums}
+.q.rok .qn{background:var(--ok-soft);color:var(--ok)}
+.q.rbad .qn{background:var(--bad-soft);color:var(--bad)}
+.qt{flex:1;min-width:0;overflow-wrap:anywhere;padding-top:3px}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;min-height:48px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);min-width:0}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .lt{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--muted);display:grid;place-items:center;font-size:.8rem;font-weight:700;color:var(--muted)}
+.opt .ot{flex:1;min-width:0;overflow-wrap:anywhere}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.sel .lt{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ok .lt{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt.bad .lt{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.mk{flex:none;font-weight:700}
+.opt.ok .mk{color:var(--ok)} .opt.bad .mk{color:var(--bad)}
+.slot{min-height:56px;margin-top:12px;padding:8px;border-radius:12px;border:2px dashed var(--line);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.slot.ok{border:2px solid var(--ok);background:var(--ok-soft)}
+.slot.bad{border:2px solid var(--bad);background:var(--bad-soft)}
+.slot em{color:var(--muted);font-size:.88rem;font-style:normal;padding-inline:4px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.w{min-height:44px;padding:6px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);text-align:center}
+.w:hover:not(:disabled){border-color:var(--accent)}
+.slot .w{background:var(--surface);border-color:var(--accent)}
+.w .zh{display:block;font-size:1.1rem}
+.w .py{margin:0;font-size:.7rem;text-align:center}
+.clr{margin-top:8px;color:var(--muted);text-decoration:underline;min-height:36px;font-size:.85rem}
+.blank{display:inline-block;min-width:4.5em;padding:0 8px;margin-inline:3px;border-bottom:2.5px solid var(--accent);text-align:center;min-height:1.6em;vertical-align:bottom;color:var(--accent);font-weight:700}
+.blank.ok{border-color:var(--ok);color:var(--ok)}
+.blank.bad{border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.sent{font-size:1.15rem;line-height:2}
+.tag{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:middle;font-weight:600}
+
+.fb{margin-top:12px;border-radius:12px;padding:10px 14px;background:var(--bg);border:1px solid var(--line)}
+.fb.ok{background:var(--ok-soft);border-color:transparent}
+.fb.bad{background:var(--bad-soft);border-color:transparent}
+.fbh{font-weight:700;margin-bottom:4px}
+.fb.ok .fbh{color:var(--ok)} .fb.bad .fbh{color:var(--bad)}
+.fb p{margin:2px 0}
+.note{padding:6px 0;border-top:1px dashed var(--line)}
+.note:first-of-type{border-top:0}
+.fix{color:var(--seal);font-size:.85rem;margin-top:6px}
+
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.dock>div{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.prog{flex:1;min-width:0}
+.prog small{display:block;color:var(--muted);margin-bottom:4px;font-variant-numeric:tabular-nums}
+.meter{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .2s}
+.dock .confirm{flex:1;min-width:0;font-size:.9rem}
+
+/* ---------- kết quả ---------- */
+.score{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:18px 16px;text-align:center}
+.big{font-size:3.4rem;line-height:1;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.big small{font-size:1.2rem;color:var(--muted);font-weight:500}
+.msg{font-weight:600;margin:8px 0 2px}
+.brk{display:grid;gap:10px;margin-top:16px;text-align:left}
+.brow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;font-size:.88rem}
+.brow .meter{grid-column:1/-1;height:8px}
+.brow .meter i{background:var(--ok)}
+.acts{display:grid;gap:8px;margin-block:14px}
+@media(min-width:560px){.acts{grid-template-columns:repeat(3,1fr)}}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-block:6px 14px}
+.empty{text-align:center;color:var(--muted);padding:30px 0}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script id="data" type="application/json">{"p1":[{"q":"Chọn từ điền vào chỗ trống: \"我毕业______经贸大学。\"","qpy":"wǒ bì yè  ·  jīng mào dà xué。","opts":[{"t":"是","py":"shì"},{"t":"于","py":"yú"},{"t":"或者","py":"huò zhě"}],"a":1,"notes":[{"zh":"我毕业于经贸大学。","py":"wǒ bì yè yú jīng mào dà xué。","vi":"Tôi tốt nghiệp trường Đại học Kinh tế Thương mại."},{"zh":"是","py":"shì","vi":"là"},{"zh":"于","py":"yú","vi":"ở, tại (văn viết)"},{"zh":"或者","py":"huò zhě","vi":"hoặc"}],"fix":null},{"q":"\"准备充分、自信满满\" được dịch sang tiếng Việt là:","qpy":"zhǔn bèi chōng fèn、 zì xìn mǎn mǎn","opts":[{"t":"Tự tin và khiêm tốn.","py":""},{"t":"Chuẩn bị đầy đủ, tràn đầy tự tin.","py":""},{"t":"Chuẩn bị tốt và rất vui vẻ.","py":""}],"a":1,"notes":[{"zh":"准备充分、自信满满","py":"zhǔn bèi chōng fèn、 zì xìn mǎn mǎn","vi":"Chuẩn bị đầy đủ, tràn đầy tự tin"}],"fix":null},{"q":"Để nói về việc \"mở rộng/khai phá thị trường mới\", ta dùng cụm từ:","qpy":"","opts":[{"t":"开拓新市场","py":"kāi tuò xīn shì chǎng"},{"t":"成立新市场","py":"chéng lì xīn shì chǎng"},{"t":"收集新市场","py":"shōu jí xīn shì chǎng"}],"a":0,"notes":[{"zh":"开拓新市场","py":"kāi tuò xīn shì chǎng","vi":"Mở rộng/khai phá thị trường mới"},{"zh":"成立","py":"chéng lì","vi":"thành lập"},{"zh":"收集","py":"shōu jí","vi":"thu thập"}],"fix":null},{"q":"Chọn đáp án đúng cho câu: 公司要开拓新市场, ______专业的销售人员。","qpy":"gōng sī yào kāi tuò xīn shì chǎng  ·  zhuān yè de xiāo shòu rén yuán。","opts":[{"t":"留","py":"liú"},{"t":"收集","py":"shōu jí"},{"t":"急需","py":"jí xū"}],"a":2,"notes":[{"zh":"公司要开拓新市场，急需专业的销售人员。","py":"gōng sī yào kāi tuò xīn shì chǎng， jí xū zhuān yè de xiāo shòu rén yuán。","vi":"Công ty muốn mở rộng thị trường mới, đang cần gấp nhân viên bán hàng chuyên nghiệp."},{"zh":"留","py":"liú","vi":"giữ lại"},{"zh":"收集","py":"shōu jí","vi":"thu thập"},{"zh":"急需","py":"jí xū","vi":"cần gấp"}],"fix":null},{"q":"Chọn đáp án đúng cho câu: \"贵公司的产品在北京的______很高。\"","qpy":"guì gōng sī de chǎn pǐn zài běi jīng de  ·  hěn gāo。","opts":[{"t":"毕业","py":"bì yè"},{"t":"知名度","py":"zhī míng dù"},{"t":"收集","py":"shōu jí"}],"a":1,"notes":[{"zh":"贵公司的产品在北京的知名度很高。","py":"guì gōng sī de chǎn pǐn zài běi jīng de zhī míng dù hěn gāo。","vi":"Sản phẩm của quý công ty có độ nổi tiếng rất cao ở Bắc Kinh."},{"zh":"毕业","py":"bì yè","vi":"tốt nghiệp"},{"zh":"知名度","py":"zhī míng dù","vi":"độ nổi tiếng"},{"zh":"收集","py":"shōu jí","vi":"thu thập"}],"fix":null},{"q":"Khi được giám đốc khen, để thể hiện sự khiêm tốn có thể nói:","qpy":"","opts":[{"t":"您客气了。","py":"nín kè qì le。"},{"t":"您过奖了。","py":"nín guò jiǎng le。"},{"t":"不用谢。","py":"bù yòng xiè。"}],"a":1,"notes":[{"zh":"您客气了。","py":"nín kè qì le。","vi":"Ngài khách sáo quá."},{"zh":"您过奖了。","py":"nín guò jiǎng le。","vi":"Ngài quá khen rồi."},{"zh":"不用谢。","py":"bù yòng xiè。","vi":"Không cần cảm ơn."}],"fix":null},{"q":"\"销售人员\" có nghĩa là:","qpy":"xiāo shòu rén yuán","opts":[{"t":"Giám đốc","py":""},{"t":"Nhân viên bán hàng","py":""},{"t":"Nhân viên chăm sóc khách hàng","py":""}],"a":1,"notes":[{"zh":"销售人员","py":"xiāo shòu rén yuán","vi":"nhân viên bán hàng"}],"fix":null},{"q":"\"客服部\" nghĩa là:","qpy":"kè fú bù","opts":[{"t":"Bộ phận bán hàng","py":""},{"t":"Bộ phận kỹ thuật","py":""},{"t":"Bộ phận chăm sóc khách hàng","py":""}],"a":2,"notes":[{"zh":"客服部","py":"kè fú bù","vi":"bộ phận chăm sóc khách hàng (viết tắt của 客户服务部)"}],"fix":null},{"q":"Từ \"大厦\" nghĩa là:","qpy":"dà shà","opts":[{"t":"Phòng làm việc","py":""},{"t":"Phòng tạp vụ","py":""},{"t":"Toà nhà lớn","py":""}],"a":2,"notes":[{"zh":"大厦","py":"dà shà","vi":"toà nhà lớn, cao ốc"}],"fix":"Đã sửa lỗi chính tả: \"Phòng tập vụ\" → \"Phòng tạp vụ\"."},{"q":"Chọn câu đúng ngữ pháp để diễn đạt: \"Sản phẩm của chúng tôi rất nổi tiếng tại Bắc Kinh.\"","qpy":"","opts":[{"t":"我们的产品北京知名度很高。","py":"wǒ men de chǎn pǐn běi jīng zhī míng dù hěn gāo。"},{"t":"我们的产品在北京具有很高的知名度。","py":"wǒ men de chǎn pǐn zài běi jīng jù yǒu hěn gāo de zhī míng dù。"},{"t":"我们的产品在北京知名度高具有。","py":"wǒ men de chǎn pǐn zài běi jīng zhī míng dù gāo jù yǒu。"}],"a":1,"notes":[{"zh":"我们的产品在北京具有很高的知名度。","py":"wǒ men de chǎn pǐn zài běi jīng jù yǒu hěn gāo de zhī míng dù。","vi":"Sản phẩm của chúng tôi có độ nổi tiếng rất cao ở Bắc Kinh."},{"zh":"我们的产品北京知名度很高。","py":"wǒ men de chǎn pǐn běi jīng zhī míng dù hěn gāo。","vi":"(sai) thiếu giới từ 在"},{"zh":"我们的产品在北京知名度高具有。","py":"wǒ men de chǎn pǐn zài běi jīng zhī míng dù gāo jù yǒu。","vi":"(sai) sai trật tự từ"}],"fix":null},{"q":"\"代理商\" có nghĩa là:","qpy":"dài lǐ shāng","opts":[{"t":"Giám đốc bộ phận.","py":""},{"t":"Đại lý, nhà phân phối.","py":""},{"t":"Người đại diện pháp luật.","py":""}],"a":1,"notes":[{"zh":"代理商","py":"dài lǐ shāng","vi":"đại lý, nhà phân phối"}],"fix":null},{"q":"\"办理手续\" nghĩa là:","qpy":"bàn lǐ shǒu xù","opts":[{"t":"Điền giấy tờ","py":""},{"t":"Thanh toán hoá đơn","py":""},{"t":"Làm thủ tục","py":""}],"a":2,"notes":[{"zh":"办理手续","py":"bàn lǐ shǒu xù","vi":"làm thủ tục"}],"fix":null},{"q":"Điền từ thích hợp vào chỗ trống: 天红公司希望成为爱家公司在大连的______。","qpy":"tiān hóng gōng sī xī wàng chéng wéi ài jiā gōng sī zài dà lián de","opts":[{"t":"代理商","py":"dài lǐ shāng"},{"t":"例会","py":"lì huì"},{"t":"代表队","py":"dài biǎo duì"}],"a":0,"notes":[{"zh":"天红公司希望成为爱家公司在大连的代理商。","py":"tiān hóng gōng sī xī wàng chéng wéi ài jiā gōng sī zài dà lián de dài lǐ shāng。","vi":"Công ty Thiên Hồng hy vọng trở thành đại lý của công ty Ái Gia tại Đại Liên."},{"zh":"例会","py":"lì huì","vi":"cuộc họp định kỳ"},{"zh":"代表队","py":"dài biǎo duì","vi":"đội đại diện"}],"fix":null},{"q":"\"信誉良好\" được dịch sang tiếng Việt là:","qpy":"xìn yù liáng hǎo","opts":[{"t":"Kinh doanh quy mô lớn.","py":""},{"t":"Uy tín tốt.","py":""},{"t":"Quản lý nghiêm khắc.","py":""}],"a":1,"notes":[{"zh":"信誉良好","py":"xìn yù liáng hǎo","vi":"uy tín tốt"}],"fix":null},{"q":"Chọn đáp án đúng cho phần dịch câu: \"Chúng ta cần điều chỉnh lại chiến lược bán hàng.\"","qpy":"","opts":[{"t":"我们需要开发新市场。","py":"wǒ men xū yào kāi fā xīn shì chǎng。"},{"t":"我们需要调整销售策略。","py":"wǒ men xū yào tiáo zhěng xiāo shòu cè lüè。"},{"t":"我们需要建立销售渠道。","py":"wǒ men xū yào jiàn lì xiāo shòu qú dào。"}],"a":1,"notes":[{"zh":"我们需要调整销售策略。","py":"wǒ men xū yào tiáo zhěng xiāo shòu cè lüè。","vi":"Chúng ta cần điều chỉnh chiến lược bán hàng."},{"zh":"我们需要开发新市场。","py":"wǒ men xū yào kāi fā xīn shì chǎng。","vi":"Chúng ta cần khai thác thị trường mới."},{"zh":"我们需要建立销售渠道。","py":"wǒ men xū yào jiàn lì xiāo shòu qú dào。","vi":"Chúng ta cần xây dựng kênh bán hàng."}],"fix":null},{"q":"Chọn đáp án đúng: \"他的话很有______，我们应该听取他的建议。\"","qpy":"tā de huà hěn yǒu  ·  wǒ men yīng gāi tīng qǔ tā de jiàn yì。","opts":[{"t":"品牌","py":"pǐn pái"},{"t":"道理","py":"dào lǐ"},{"t":"策略","py":"cè lüè"}],"a":1,"notes":[{"zh":"他的话很有道理，我们应该听取他的建议。","py":"tā de huà hěn yǒu dào lǐ， wǒ men yīng gāi tīng qǔ tā de jiàn yì。","vi":"Lời anh ấy rất có lý, chúng ta nên lắng nghe đề xuất của anh ấy."},{"zh":"品牌","py":"pǐn pái","vi":"thương hiệu"},{"zh":"道理","py":"dào lǐ","vi":"đạo lý, lẽ phải"},{"zh":"策略","py":"cè lüè","vi":"chiến lược, sách lược"}],"fix":null},{"q":"Chọn đáp án đúng: \"营销______不到30万人民币。\"","qpy":"yíng xiāo  ·  bú dào  ·  wàn rén mín bì。","opts":[{"t":"策略","py":"cè lüè"},{"t":"收入","py":"shōu rù"},{"t":"目标","py":"mù biāo"}],"a":1,"notes":[{"zh":"营销收入不到30万人民币。","py":"yíng xiāo shōu rù bú dào 30 wàn rén mín bì。","vi":"Doanh thu tiếp thị chưa đến 300.000 nhân dân tệ."},{"zh":"策略","py":"cè lüè","vi":"chiến lược"},{"zh":"收入","py":"shōu rù","vi":"thu nhập, doanh thu"},{"zh":"目标","py":"mù biāo","vi":"mục tiêu"}],"fix":null},{"q":"Chọn đáp án đúng: \"以后在工作中，请王经理多多______。\"","qpy":"yǐ hòu zài gōng zuò zhōng， qǐng wáng jīng lǐ duō duō","opts":[{"t":"知名度","py":"zhī míng dù"},{"t":"收入","py":"shōu rù"},{"t":"关照","py":"guān zhào"}],"a":2,"notes":[{"zh":"以后在工作中，请王经理多多关照。","py":"yǐ hòu zài gōng zuò zhōng， qǐng wáng jīng lǐ duō duō guān zhào。","vi":"Sau này trong công việc, xin Giám đốc Vương giúp đỡ nhiều."},{"zh":"关照","py":"guān zhào","vi":"chiếu cố, giúp đỡ"}],"fix":null},{"q":"Điền từ thích hợp vào chỗ trống: 这种产品的质量______很好, 但在市场上知名度一般。","qpy":"zhè zhǒng chǎn pǐn de zhì liàng  ·  hěn hǎo  ·  dàn zài shì chǎng shàng zhī míng dù yì bān。","opts":[{"t":"的确","py":"dí què"},{"t":"不太","py":"bù tài"},{"t":"普通","py":"pǔ tōng"}],"a":0,"notes":[{"zh":"这种产品的质量的确很好，但在市场上知名度一般。","py":"zhè zhǒng chǎn pǐn de zhì liàng dí què hěn hǎo， dàn zài shì chǎng shàng zhī míng dù yì bān。","vi":"Chất lượng sản phẩm này quả thực rất tốt, nhưng độ nổi tiếng trên thị trường chỉ ở mức bình thường."},{"zh":"的确","py":"dí què","vi":"quả thực"},{"zh":"不太","py":"bù tài","vi":"không quá"},{"zh":"普通","py":"pǔ tōng","vi":"bình thường"}],"fix":null},{"q":"\"积极态度\" nghĩa là:","qpy":"jī jí tài dù","opts":[{"t":"Thái độ tiêu cực","py":""},{"t":"Thái độ tích cực","py":""},{"t":"Thái độ làm việc","py":""}],"a":1,"notes":[{"zh":"积极态度","py":"jī jí tài dù","vi":"thái độ tích cực"}],"fix":null},{"q":"\"管理团队\" nghĩa là:","qpy":"guǎn lǐ tuán duì","opts":[{"t":"Đội ngũ quản lý","py":""},{"t":"Đội ngũ cán bộ","py":""},{"t":"Đội ngũ nhân viên","py":""}],"a":0,"notes":[{"zh":"管理团队","py":"guǎn lǐ tuán duì","vi":"đội ngũ quản lý"}],"fix":null},{"q":"\"产品大量入市\" nghĩa là:","qpy":"chǎn pǐn dà liàng rù shì","opts":[{"t":"Sản phẩm được tung ra thị trường với số lượng lớn.","py":""},{"t":"Sản phẩm được tung ra thị trường với số lượng ít.","py":""},{"t":"Sản phẩm được tung ra thị trường với số lượng vừa.","py":""}],"a":0,"notes":[{"zh":"产品大量入市","py":"chǎn pǐn dà liàng rù shì","vi":"sản phẩm tung ra thị trường với số lượng lớn"}],"fix":null},{"q":"\"就餐卡\" nghĩa là:","qpy":"jiù cān kǎ","opts":[{"t":"Thẻ nhân viên","py":""},{"t":"Thẻ ăn","py":""},{"t":"Thẻ ngân hàng","py":""}],"a":1,"notes":[{"zh":"就餐卡","py":"jiù cān kǎ","vi":"thẻ ăn (thẻ dùng bữa ở căng tin)"}],"fix":"Đã sửa lỗi chính tả: \"就酱卡\" → \"就餐卡\"."},{"q":"\"目标客户\" nghĩa là:","qpy":"mù biāo kè hù","opts":[{"t":"Nhà phân phối độc lập","py":""},{"t":"Mục tiêu kế hoạch","py":""},{"t":"Khách hàng mục tiêu","py":""}],"a":2,"notes":[{"zh":"目标客户","py":"mù biāo kè hù","vi":"khách hàng mục tiêu"}],"fix":null},{"q":"\"独家代理商\" nghĩa là:","qpy":"dú jiā dài lǐ shāng","opts":[{"t":"Đại lý độc quyền","py":""},{"t":"Đại lý độc lập","py":""},{"t":"Nhà phân phối độc lập","py":""}],"a":0,"notes":[{"zh":"独家代理商","py":"dú jiā dài lǐ shāng","vi":"đại lý độc quyền"}],"fix":null},{"q":"Cụm từ \"普通代理商\" có nghĩa là:","qpy":"pǔ tōng dài lǐ shāng","opts":[{"t":"Đại lý độc lập","py":""},{"t":"Đại lý thường","py":""},{"t":"Đại lý độc quyền","py":""}],"a":1,"notes":[{"zh":"普通代理商","py":"pǔ tōng dài lǐ shāng","vi":"đại lý thường"}],"fix":null},{"q":"Cụm từ \"现场签约\" có nghĩa là:","qpy":"xiàn chǎng qiān yuē","opts":[{"t":"Không ký kết","py":""},{"t":"Ký kết qua mạng","py":""},{"t":"Ký kết trực tiếp","py":""}],"a":2,"notes":[{"zh":"现场签约","py":"xiàn chǎng qiān yuē","vi":"ký kết trực tiếp tại chỗ"}],"fix":null},{"q":"Cụm từ \"法人的委托书\" có nghĩa là:","qpy":"fǎ rén de wěi tuō shū","opts":[{"t":"Giấy uỷ quyền của người đại diện pháp nhân","py":""},{"t":"Giấy uỷ quyền của giám đốc","py":""},{"t":"Giấy uỷ quyền của luật sư","py":""}],"a":0,"notes":[{"zh":"法人的委托书","py":"fǎ rén de wěi tuō shū","vi":"giấy uỷ quyền của người đại diện pháp nhân"}],"fix":null},{"q":"Chọn đáp án đúng: 做独家代理商的资金______很大。","qpy":"zuò dú jiā dài lǐ shāng de zī jīn  ·  hěn dà。","opts":[{"t":"收入","py":"shōu rù"},{"t":"压力","py":"yā lì"},{"t":"知名度","py":"zhī míng dù"}],"a":1,"notes":[{"zh":"做独家代理商的资金压力很大。","py":"zuò dú jiā dài lǐ shāng de zī jīn yā lì hěn dà。","vi":"Làm đại lý độc quyền thì áp lực vốn rất lớn."},{"zh":"压力","py":"yā lì","vi":"áp lực"},{"zh":"收入","py":"shōu rù","vi":"thu nhập"},{"zh":"知名度","py":"zhī míng dù","vi":"độ nổi tiếng"}],"fix":null},{"q":"Cụm từ \"下了订单\" có nghĩa là:","qpy":"xià le dìng dān","opts":[{"t":"Đã viết hợp đồng lao động","py":""},{"t":"Đã đặt đơn hàng","py":""},{"t":"Đã viết báo cáo tài chính","py":""}],"a":1,"notes":[{"zh":"下了订单","py":"xià le dìng dān","vi":"đã đặt đơn hàng"}],"fix":null},{"q":"Chọn câu đúng ngữ pháp khi tặng quà:","qpy":"","opts":[{"t":"这是我们笑纳的心意，一点儿。","py":"zhè shì wǒ men xiào nà de xīn yì， yì diǎn ér。"},{"t":"这是我们的一点儿心意，请笑纳。","py":"zhè shì wǒ men de yì diǎn ér xīn yì， qǐng xiào nà。"},{"t":"一点儿心意请笑纳这是。","py":"yì diǎn ér xīn yì qǐng xiào nà zhè shì。"}],"a":1,"notes":[{"zh":"这是我们的一点儿心意，请笑纳。","py":"zhè shì wǒ men de yì diǎn ér xīn yì， qǐng xiào nà。","vi":"Đây là chút tấm lòng của chúng tôi, xin hãy nhận cho."}],"fix":null},{"q":"Hoàn thành hội thoại: A: 以后我们在工作中要多交流。 B: 对，我们要______双方的沟通与合作。","qpy":"yǐ hòu wǒ men zài gōng zuò zhōng yào duō jiāo liú。  ·  duì， wǒ men yào  ·  shuāng fāng de gōu tōng yǔ hé zuò。","opts":[{"t":"包涵","py":"bāo hán"},{"t":"加强","py":"jiā qiáng"},{"t":"招待","py":"zhāo dài"}],"a":1,"notes":[{"zh":"A：以后我们在工作中要多交流。","py":"A： yǐ hòu wǒ men zài gōng zuò zhōng yào duō jiāo liú。","vi":"Sau này trong công việc chúng ta cần trao đổi nhiều hơn."},{"zh":"B：对，我们要加强双方的沟通与合作。","py":"B： duì， wǒ men yào jiā qiáng shuāng fāng de gōu tōng yǔ hé zuò。","vi":"Đúng vậy, chúng ta cần tăng cường giao tiếp và hợp tác giữa hai bên."},{"zh":"包涵","py":"bāo hán","vi":"bao dung, thông cảm"},{"zh":"加强","py":"jiā qiáng","vi":"tăng cường"},{"zh":"招待","py":"zhāo dài","vi":"tiếp đãi"}],"fix":null},{"q":"Cụm từ \"考察工厂\" có nghĩa là:","qpy":"kǎo chá gōng chǎng","opts":[{"t":"Khảo sát công xưởng","py":""},{"t":"Khảo sát nhà kho","py":""},{"t":"Khảo sát phòng mẫu","py":""}],"a":0,"notes":[{"zh":"考察工厂","py":"kǎo chá gōng chǎng","vi":"khảo sát nhà máy/công xưởng"}],"fix":null},{"q":"Cụm từ \"举行晚宴\" có nghĩa là:","qpy":"jǔ xíng wǎn yàn","opts":[{"t":"Tổ chức sinh nhật","py":""},{"t":"Tổ chức tiệc mừng thọ","py":""},{"t":"Tổ chức tiệc tối","py":""}],"a":2,"notes":[{"zh":"举行晚宴","py":"jǔ xíng wǎn yàn","vi":"tổ chức tiệc tối"}],"fix":null},{"q":"Cấu trúc \"为……干杯\" trong câu \"为新市场销售顺利干杯！\" có nghĩa gì?","qpy":"wèi…… gān bēi  ·  wèi xīn shì chǎng xiāo shòu shùn lì gān bēi！","opts":[{"t":"Cạn ly vì lý do gì đó","py":""},{"t":"Ký hợp đồng vì lý do gì đó","py":""},{"t":"Hợp tác vì lý do gì đó","py":""}],"a":0,"notes":[{"zh":"为新市场销售顺利干杯！","py":"wèi xīn shì chǎng xiāo shòu shùn lì gān bēi！","vi":"Cạn ly vì việc bán hàng ở thị trường mới thuận lợi!"}],"fix":null},{"q":"Từ nào KHÔNG cùng nhóm với các từ còn lại?","qpy":"","opts":[{"t":"航班","py":"háng bān"},{"t":"营业执照","py":"yíng yè zhí zhào"},{"t":"高铁","py":"gāo tiě"}],"a":1,"notes":[{"zh":"航班","py":"háng bān","vi":"chuyến bay"},{"zh":"营业执照","py":"yíng yè zhí zhào","vi":"giấy phép kinh doanh"},{"zh":"高铁","py":"gāo tiě","vi":"tàu cao tốc"}],"fix":null},{"q":"Từ nào không thuộc nhóm từ liên quan đến các hành động trong hội đàm:","qpy":"","opts":[{"t":"核算","py":"hé suàn"},{"t":"礼品","py":"lǐ pǐn"},{"t":"提供","py":"tí gōng"}],"a":1,"notes":[{"zh":"核算","py":"hé suàn","vi":"tính toán, hạch toán"},{"zh":"礼品","py":"lǐ pǐn","vi":"quà tặng (danh từ)"},{"zh":"提供","py":"tí gōng","vi":"cung cấp"}],"fix":null},{"q":"Cụm từ \"竭尽全力\" dùng để thể hiện:","qpy":"jié jìn quán lì","opts":[{"t":"Sự không đồng ý với mức giá","py":""},{"t":"Sự lo lắng về tiền vốn","py":""},{"t":"Sự quyết tâm, dốc toàn lực làm việc","py":""}],"a":2,"notes":[{"zh":"竭尽全力","py":"jié jìn quán lì","vi":"dốc hết sức lực"}],"fix":null},{"q":"Từ nào dưới đây mang nghĩa khu vực lân cận, xung quanh:","qpy":"","opts":[{"t":"周边","py":"zhōu biān"},{"t":"迅速","py":"xùn sù"},{"t":"统一","py":"tǒng yī"}],"a":0,"notes":[{"zh":"周边","py":"zhōu biān","vi":"xung quanh, vùng lân cận"},{"zh":"迅速","py":"xùn sù","vi":"nhanh chóng"},{"zh":"统一","py":"tǒng yī","vi":"thống nhất"}],"fix":null},{"q":"Cụm từ \"报价单\" có nghĩa là:","qpy":"bào jià dān","opts":[{"t":"Bảng báo giá","py":""},{"t":"Bảng thông tin nhân viên","py":""},{"t":"Bảng vẽ","py":""}],"a":0,"notes":[{"zh":"报价单","py":"bào jià dān","vi":"bảng báo giá"}],"fix":null},{"q":"Cụm từ \"成本核算\" có nghĩa là:","qpy":"chéng běn hé suàn","opts":[{"t":"Định giá sản phẩm","py":""},{"t":"Tính toán chi phí","py":""},{"t":"Báo giá thị trường","py":""}],"a":1,"notes":[{"zh":"成本核算","py":"chéng běn hé suàn","vi":"hạch toán/tính toán chi phí"}],"fix":null},{"q":"Cụm từ \"合作模式\" có nghĩa là:","qpy":"hé zuò mó shì","opts":[{"t":"Mô hình/Hình thức độc quyền","py":""},{"t":"Mô hình/Hình thức hợp tác","py":""},{"t":"Mô hình/Hình thức nhượng quyền","py":""}],"a":1,"notes":[{"zh":"合作模式","py":"hé zuò mó shì","vi":"mô hình/hình thức hợp tác"}],"fix":null},{"q":"Chọn từ thích hợp và điền vào chỗ trống: 我们希望公司可以______发展。","qpy":"wǒ men xī wàng gōng sī kě yǐ  ·  fā zhǎn。","opts":[{"t":"迅速","py":"xùn sù"},{"t":"支持","py":"zhī chí"},{"t":"模式","py":"mó shì"}],"a":0,"notes":[{"zh":"我们希望公司可以迅速发展。","py":"wǒ men xī wàng gōng sī kě yǐ xùn sù fā zhǎn。","vi":"Chúng tôi hy vọng công ty có thể phát triển nhanh chóng."},{"zh":"迅速","py":"xùn sù","vi":"nhanh chóng"},{"zh":"支持","py":"zhī chí","vi":"ủng hộ"},{"zh":"模式","py":"mó shì","vi":"mô hình"}],"fix":null},{"q":"Cụm từ \"自动化\" trong câu \"这些设备都是自动化的\" có nghĩa là:","qpy":"zì dòng huà  ·  zhè xiē shè bèi dōu shì zì dòng huà de","opts":[{"t":"Tự động hóa","py":""},{"t":"Thiết bị nhập khẩu","py":""},{"t":"Thiết bị cũ","py":""}],"a":0,"notes":[{"zh":"这些设备都是自动化的。","py":"zhè xiē shè bèi dōu shì zì dòng huà de。","vi":"Những thiết bị này đều được tự động hoá."},{"zh":"自动化","py":"zì dòng huà","vi":"tự động hoá"}],"fix":null},{"q":"Đặt câu hỏi cho phần trong ngoặc: \"这些设备都是从(法国)进口的。\"","qpy":"zhè xiē shè bèi dōu shì cóng  ·  fǎ guó  ·  jìn kǒu de。","opts":[{"t":"这些设备是从哪儿进口的？","py":"zhè xiē shè bèi shì cóng nǎ ér jìn kǒu de？"},{"t":"这些设备先进吗？","py":"zhè xiē shè bèi xiān jìn ma？"},{"t":"这些设备是什么时候进口的？","py":"zhè xiē shè bèi shì shén me shí hòu jìn kǒu de？"}],"a":0,"notes":[{"zh":"这些设备都是从法国进口的。","py":"zhè xiē shè bèi dōu shì cóng fǎ guó jìn kǒu de。","vi":"Những thiết bị này đều nhập khẩu từ Pháp."},{"zh":"这些设备是从哪儿进口的？","py":"zhè xiē shè bèi shì cóng nǎ ér jìn kǒu de？","vi":"Những thiết bị này nhập khẩu từ đâu?"},{"zh":"这些设备先进吗？","py":"zhè xiē shè bèi xiān jìn ma？","vi":"Những thiết bị này có tiên tiến không?"},{"zh":"这些设备是什么时候进口的？","py":"zhè xiē shè bèi shì shén me shí hòu jìn kǒu de？","vi":"Những thiết bị này nhập khẩu khi nào?"}],"fix":null},{"q":"Tìm từ khác loại:","qpy":"","opts":[{"t":"报价单","py":"bào jià dān"},{"t":"样品间","py":"yàng pǐn jiān"},{"t":"生产车间","py":"shēng chǎn chē jiān"}],"a":0,"notes":[{"zh":"报价单","py":"bào jià dān","vi":"bảng báo giá (văn bản)"},{"zh":"样品间","py":"yàng pǐn jiān","vi":"phòng mẫu"},{"zh":"生产车间","py":"shēng chǎn chē jiān","vi":"xưởng sản xuất"}],"fix":null},{"q":"Điền từ vào chỗ trống: 有了这种先进的设备，我们的______提高了。","qpy":"yǒu le zhè zhǒng xiān jìn de shè bèi， wǒ men de  ·  tí gāo le。","opts":[{"t":"生产效率","py":"shēng chǎn xiào lǜ"},{"t":"样品间","py":"yàng pǐn jiān"},{"t":"喜好","py":"xǐ hào"}],"a":0,"notes":[{"zh":"有了这种先进的设备，我们的生产效率提高了。","py":"yǒu le zhè zhǒng xiān jìn de shè bèi， wǒ men de shēng chǎn xiào lǜ tí gāo le。","vi":"Có thiết bị tiên tiến này, hiệu suất sản xuất của chúng tôi đã tăng lên."},{"zh":"生产效率","py":"shēng chǎn xiào lǜ","vi":"hiệu suất sản xuất"},{"zh":"样品间","py":"yàng pǐn jiān","vi":"phòng mẫu"},{"zh":"喜好","py":"xǐ hào","vi":"sở thích"}],"fix":null},{"q":"Cụm từ \"版权管理\" có nghĩa là:","qpy":"bǎn quán guǎn lǐ","opts":[{"t":"Quản lý bản quyền","py":""},{"t":"Quản lý cửa hàng","py":""},{"t":"Quản lý nhân sự","py":""}],"a":0,"notes":[{"zh":"版权管理","py":"bǎn quán guǎn lǐ","vi":"quản lý bản quyền"}],"fix":null},{"q":"Từ vựng nào không cùng nhóm với các từ còn lại? (nhóm: âm nhạc – bản quyền)","qpy":"","opts":[{"t":"音乐","py":"yīn yuè"},{"t":"抽奖","py":"chōu jiǎng"},{"t":"版权","py":"bǎn quán"}],"a":1,"notes":[{"zh":"音乐","py":"yīn yuè","vi":"âm nhạc"},{"zh":"抽奖","py":"chōu jiǎng","vi":"rút thăm trúng thưởng"},{"zh":"版权","py":"bǎn quán","vi":"bản quyền"}],"fix":null},{"q":"Đặt câu hỏi cho từ trong ngoặc: \"这个促销方案的关键是(礼品)。\"","qpy":"zhè ge cù xiāo fāng àn de guān jiàn shì  ·  lǐ pǐn","opts":[{"t":"促销方案是什么？","py":"cù xiāo fāng àn shì shén me？"},{"t":"礼品在哪儿？","py":"lǐ pǐn zài nǎ ér？"},{"t":"这个促销方案的关键是什么？","py":"zhè ge cù xiāo fāng àn de guān jiàn shì shén me？"}],"a":2,"notes":[{"zh":"这个促销方案的关键是礼品。","py":"zhè ge cù xiāo fāng àn de guān jiàn shì lǐ pǐn。","vi":"Mấu chốt của phương án khuyến mãi này là quà tặng."},{"zh":"这个促销方案的关键是什么？","py":"zhè ge cù xiāo fāng àn de guān jiàn shì shén me？","vi":"Mấu chốt của phương án khuyến mãi này là gì?"},{"zh":"促销方案是什么？","py":"cù xiāo fāng àn shì shén me？","vi":"Phương án khuyến mãi là gì?"},{"zh":"礼品在哪儿？","py":"lǐ pǐn zài nǎ ér？","vi":"Quà tặng ở đâu?"}],"fix":null},{"q":"Từ nào không thuộc nhóm từ liên quan đến các hoạt động khuyến mãi?","qpy":"","opts":[{"t":"礼品","py":"lǐ pǐn"},{"t":"版权","py":"bǎn quán"},{"t":"抽奖","py":"chōu jiǎng"}],"a":1,"notes":[{"zh":"礼品","py":"lǐ pǐn","vi":"quà tặng"},{"zh":"版权","py":"bǎn quán","vi":"bản quyền"},{"zh":"抽奖","py":"chōu jiǎng","vi":"rút thăm trúng thưởng"}],"fix":null},{"q":"Cụm từ \"设计促销方案\" có nghĩa là:","qpy":"shè jì cù xiāo fāng àn","opts":[{"t":"Thiết kế phương án thúc đẩy tiêu thụ sản phẩm","py":""},{"t":"Thiết kế phương án bán buôn","py":""},{"t":"Thiết kế phương án hợp tác","py":""}],"a":0,"notes":[{"zh":"设计促销方案","py":"shè jì cù xiāo fāng àn","vi":"thiết kế phương án khuyến mãi/thúc đẩy tiêu thụ"}],"fix":null},{"q":"Cụm từ \"音乐版权\" được dịch là:","qpy":"yīn yuè bǎn quán","opts":[{"t":"Bản quyền sách","py":""},{"t":"Bản quyền phim","py":""},{"t":"Bản quyền âm nhạc","py":""}],"a":2,"notes":[{"zh":"音乐版权","py":"yīn yuè bǎn quán","vi":"bản quyền âm nhạc"}],"fix":null},{"q":"Chọn từ thích hợp điền vào chỗ trống: \"公司非常___这次的促销活动。\"","qpy":"gōng sī fēi cháng  ·  zhè cì de cù xiāo huó dòng。","opts":[{"t":"冲动","py":"chōng dòng"},{"t":"等级","py":"děng jí"},{"t":"重视","py":"zhòng shì"}],"a":2,"notes":[{"zh":"公司非常重视这次的促销活动。","py":"gōng sī fēi cháng zhòng shì zhè cì de cù xiāo huó dòng。","vi":"Công ty rất coi trọng đợt khuyến mãi lần này."},{"zh":"冲动","py":"chōng dòng","vi":"bốc đồng"},{"zh":"等级","py":"děng jí","vi":"cấp bậc"},{"zh":"重视","py":"zhòng shì","vi":"coi trọng"}],"fix":null},{"q":"\"刺激消费\" có nghĩa là:","qpy":"cì jī xiāo fèi","opts":[{"t":"Kích thích tiêu dùng","py":""},{"t":"Hợp tác đôi bên","py":""},{"t":"Tham gia bốc thăm","py":""}],"a":0,"notes":[{"zh":"刺激消费","py":"cì jī xiāo fèi","vi":"kích thích tiêu dùng"}],"fix":null},{"q":"Cụm từ \"后续工作\" có nghĩa là:","qpy":"hòu xù gōng zuò","opts":[{"t":"Công việc bán hàng","py":""},{"t":"Công việc tiếp theo","py":""},{"t":"Công việc hợp tác","py":""}],"a":1,"notes":[{"zh":"后续工作","py":"hòu xù gōng zuò","vi":"công việc tiếp theo"}],"fix":null},{"q":"Điền từ thích hợp: \"这次来北京，我的___很大，学到了很多东西。\"","qpy":"zhè cì lái běi jīng， wǒ de  ·  hěn dà， xué dào le hěn duō dōng xī。","opts":[{"t":"订单","py":"dìng dān"},{"t":"收获","py":"shōu huò"},{"t":"确定","py":"què dìng"}],"a":1,"notes":[{"zh":"这次来北京，我的收获很大，学到了很多东西。","py":"zhè cì lái běi jīng， wǒ de shōu huò hěn dà， xué dào le hěn duō dōng xī。","vi":"Chuyến đến Bắc Kinh lần này, thu hoạch của tôi rất lớn, học được nhiều điều."},{"zh":"订单","py":"dìng dān","vi":"đơn hàng"},{"zh":"收获","py":"shōu huò","vi":"thu hoạch"},{"zh":"确定","py":"què dìng","vi":"xác định"}],"fix":null},{"q":"Xét về các hành động thúc đẩy hợp tác, từ nào dưới đây không thuộc nhóm này:","qpy":"","opts":[{"t":"协调","py":"xié tiáo"},{"t":"推进","py":"tuī jìn"},{"t":"辛苦","py":"xīn kǔ"}],"a":2,"notes":[{"zh":"协调","py":"xié tiáo","vi":"phối hợp"},{"zh":"推进","py":"tuī jìn","vi":"thúc đẩy"},{"zh":"辛苦","py":"xīn kǔ","vi":"vất vả (tính từ)"}],"fix":null},{"q":"Điền từ vào chỗ trống \"产品___也更有保障\"。","qpy":"chǎn pǐn  ·  yě gèng yǒu bǎo zhàng","opts":[{"t":"质量","py":"zhì liàng"},{"t":"检验","py":"jiǎn yàn"},{"t":"效率","py":"xiào lǜ"}],"a":0,"notes":[{"zh":"产品质量也更有保障。","py":"chǎn pǐn zhì liàng yě gèng yǒu bǎo zhàng。","vi":"Chất lượng sản phẩm cũng được đảm bảo hơn."},{"zh":"质量","py":"zhì liàng","vi":"chất lượng"},{"zh":"检验","py":"jiǎn yàn","vi":"kiểm định"},{"zh":"效率","py":"xiào lǜ","vi":"hiệu suất"}],"fix":null},{"q":"Từ vựng nào không phải là tính từ?","qpy":"","opts":[{"t":"生产","py":"shēng chǎn"},{"t":"宽敞","py":"kuān chǎng"},{"t":"时尚","py":"shí shàng"}],"a":0,"notes":[{"zh":"生产","py":"shēng chǎn","vi":"sản xuất (động từ)"},{"zh":"宽敞","py":"kuān chǎng","vi":"rộng rãi"},{"zh":"时尚","py":"shí shàng","vi":"thời thượng"}],"fix":null},{"q":"Hoàn thành hội thoại ngắn: A: 你觉得这个促销方案怎么样? B: 我觉得没有什么___。","qpy":"nǐ jué de zhè ge cù xiāo fāng àn zěn me yàng  ·  wǒ jué de méi yǒu shén me","opts":[{"t":"歌手","py":"gē shǒu"},{"t":"新意","py":"xīn yì"},{"t":"包装","py":"bāo zhuāng"}],"a":1,"notes":[{"zh":"A：你觉得这个促销方案怎么样？","py":"A： nǐ jué de zhè ge cù xiāo fāng àn zěn me yàng？","vi":"Bạn thấy phương án khuyến mãi này thế nào?"},{"zh":"B：我觉得没有什么新意。","py":"B： wǒ jué de méi yǒu shén me xīn yì。","vi":"Tôi thấy chẳng có gì mới mẻ."},{"zh":"歌手","py":"gē shǒu","vi":"ca sĩ"},{"zh":"新意","py":"xīn yì","vi":"ý mới"},{"zh":"包装","py":"bāo zhuāng","vi":"bao bì"}],"fix":null},{"q":"Dịch câu \"Sử dụng bao bì đẹp có thể thu hút khách hàng.\" sang tiếng Trung.","qpy":"","opts":[{"t":"用精美的包装可以招揽顾客。","py":"yòng jīng měi de bāo zhuāng kě yǐ zhāo lǎn gù kè。"},{"t":"包装很贵重可以针对顾客。","py":"bāo zhuāng hěn guì zhòng kě yǐ zhēn duì gù kè。"},{"t":"精美的歌手可以招揽顾客。","py":"jīng měi de gē shǒu kě yǐ zhāo lǎn gù kè。"}],"a":0,"notes":[{"zh":"用精美的包装可以招揽顾客。","py":"yòng jīng měi de bāo zhuāng kě yǐ zhāo lǎn gù kè。","vi":"Dùng bao bì tinh xảo có thể thu hút khách hàng."},{"zh":"包装很贵重可以针对顾客。","py":"bāo zhuāng hěn guì zhòng kě yǐ zhēn duì gù kè。","vi":"(sai) Bao bì rất quý giá có thể nhắm vào khách hàng."},{"zh":"精美的歌手可以招揽顾客。","py":"jīng měi de gē shǒu kě yǐ zhāo lǎn gù kè。","vi":"(sai) Ca sĩ tinh xảo có thể thu hút khách hàng."}],"fix":null},{"q":"Cụm từ \"出口资质\" có nghĩa là:","qpy":"chū kǒu zī zhì","opts":[{"t":"Tư cách xuất khẩu","py":""},{"t":"Hợp đồng xuất khẩu","py":""},{"t":"Sản lượng xuất khẩu","py":""}],"a":0,"notes":[{"zh":"出口资质","py":"chū kǒu zī zhì","vi":"tư cách/điều kiện xuất khẩu"}],"fix":null},{"q":"Từ vựng nào không cùng nhóm với các từ còn lại? (nhóm: phương tiện vận tải)","qpy":"","opts":[{"t":"飞机","py":"fēi jī"},{"t":"轮船","py":"lún chuán"},{"t":"保险","py":"bǎo xiǎn"}],"a":2,"notes":[{"zh":"飞机","py":"fēi jī","vi":"máy bay"},{"zh":"轮船","py":"lún chuán","vi":"tàu thuỷ"},{"zh":"保险","py":"bǎo xiǎn","vi":"bảo hiểm"}],"fix":null},{"q":"Dịch cụm từ \"梳理流程\":","qpy":"shū lǐ liú chéng","opts":[{"t":"Rà soát quy trình/hệ thống hoá quy trình","py":""},{"t":"Thay đổi kế hoạch kinh doanh","py":""},{"t":"Kiểm tra chất lượng hàng hóa","py":""}],"a":0,"notes":[{"zh":"梳理流程","py":"shū lǐ liú chéng","vi":"rà soát, hệ thống hoá quy trình"}],"fix":null},{"q":"Khi vận chuyển đường biển mà không có chỗ trên tàu, ta nói:","qpy":"","opts":[{"t":"没有舱位","py":"méi yǒu cāng wèi"},{"t":"没有要求","py":"méi yǒu yāo qiú"},{"t":"没有材料","py":"méi yǒu cái liào"}],"a":0,"notes":[{"zh":"没有舱位","py":"méi yǒu cāng wèi","vi":"không có chỗ (khoang) trên tàu"},{"zh":"没有要求","py":"méi yǒu yāo qiú","vi":"không có yêu cầu"},{"zh":"没有材料","py":"méi yǒu cái liào","vi":"không có vật liệu/tài liệu"}],"fix":null},{"q":"Cụm từ \"检验证书\" có nghĩa là:","qpy":"jiǎn yàn zhèng shū","opts":[{"t":"Hợp đồng xuất khẩu","py":""},{"t":"Giấy chứng nhận sản lượng xuất khẩu","py":""},{"t":"Giấy chứng nhận kiểm định chất lượng","py":""}],"a":2,"notes":[{"zh":"检验证书","py":"jiǎn yàn zhèng shū","vi":"giấy chứng nhận kiểm định"}],"fix":null},{"q":"Cụm từ \"运输公司\" có nghĩa là:","qpy":"yùn shū gōng sī","opts":[{"t":"Cơ quan hải quan","py":""},{"t":"Hợp đồng xuất khẩu","py":""},{"t":"Công ty vận chuyển","py":""}],"a":2,"notes":[{"zh":"运输公司","py":"yùn shū gōng sī","vi":"công ty vận chuyển"}],"fix":null}],"p2":[{"words":[{"w":"我","py":"wǒ"},{"w":"很","py":"hěn"},{"w":"想","py":"xiǎng"},{"w":"加入","py":"jiā rù"},{"w":"你们","py":"nǐ men"},{"w":"的团队","py":"de tuán duì"},{"w":"。","py":"。"}],"ans":"我很想加入你们的团队。","py":"wǒ hěn xiǎng jiā rù nǐ men de tuán duì。","vi":"Tôi rất muốn gia nhập đội ngũ của các bạn.","fix":null},{"words":[{"w":"希望","py":"xī wàng"},{"w":"你","py":"nǐ"},{"w":"能","py":"néng"},{"w":"尽快","py":"jǐn kuài"},{"w":"到","py":"dào"},{"w":"公司","py":"gōng sī"},{"w":"入职","py":"rù zhí"},{"w":"。","py":"。"}],"ans":"希望你能尽快到公司入职。","py":"xī wàng nǐ néng jǐn kuài dào gōng sī rù zhí。","vi":"Hy vọng bạn có thể sớm đến công ty nhận việc.","fix":"Đã sửa: \"希望你能尽快入职公司\" nghe không tự nhiên; thêm từ 到 vào dãy từ và đổi thành \"到公司入职\"."},{"words":[{"w":"今天","py":"jīn tiān"},{"w":"召集","py":"zhào jí"},{"w":"大家","py":"dà jiā"},{"w":"开会","py":"kāi huì"},{"w":"讨论","py":"tǎo lùn"},{"w":"代理商的事情","py":"dài lǐ shāng de shì qíng"},{"w":"。","py":"。"}],"ans":"今天召集大家开会讨论代理商的事情。","py":"jīn tiān zhào jí dà jiā kāi huì tǎo lùn dài lǐ shāng de shì qíng。","vi":"Hôm nay triệu tập mọi người họp để thảo luận việc về đại lý.","fix":"Đã sửa: \"大家今天召集开会…\" sai ngữ pháp vì 召集 cần tân ngữ (大家) đứng ngay sau."},{"words":[{"w":"我们","py":"wǒ men"},{"w":"就","py":"jiù"},{"w":"约","py":"yuē"},{"w":"个","py":"gè"},{"w":"时间","py":"shí jiān"},{"w":"见面","py":"jiàn miàn"},{"w":"谈谈","py":"tán tán"},{"w":"。","py":"。"}],"ans":"我们就约个时间见面谈谈。","py":"wǒ men jiù yuē gè shí jiān jiàn miàn tán tán。","vi":"Chúng ta cứ hẹn một thời gian gặp nhau nói chuyện nhé.","fix":null},{"words":[{"w":"我","py":"wǒ"},{"w":"现在","py":"xiàn zài"},{"w":"邀请","py":"yāo qǐng"},{"w":"您","py":"nín"},{"w":"来","py":"lái"},{"w":"北京","py":"běi jīng"},{"w":"正式","py":"zhèng shì"},{"w":"面谈","py":"miàn tán"},{"w":"。","py":"。"}],"ans":"我现在邀请您来北京正式面谈。","py":"wǒ xiàn zài yāo qǐng nín lái běi jīng zhèng shì miàn tán。","vi":"Bây giờ tôi mời ngài đến Bắc Kinh để trao đổi trực tiếp một cách chính thức.","fix":null},{"words":[{"w":"订好","py":"dìng hǎo"},{"w":"机票","py":"jī piào"},{"w":"以后，","py":"yǐ hòu，"},{"w":"我们可以","py":"wǒ men kě yǐ"},{"w":"现场","py":"xiàn chǎng"},{"w":"签约","py":"qiān yuē"},{"w":"。","py":"。"}],"ans":"订好机票以后，我们可以现场签约。","py":"dìng hǎo jī piào yǐ hòu， wǒ men kě yǐ xiàn chǎng qiān yuē。","vi":"Sau khi đặt xong vé máy bay, chúng ta có thể ký kết trực tiếp tại chỗ.","fix":null},{"words":[{"w":"你的","py":"nǐ de"},{"w":"理想","py":"lǐ xiǎng"},{"w":"薪酬","py":"xīn chóu"},{"w":"是多少","py":"shì duō shǎo"},{"w":"？","py":"？"}],"ans":"你的理想薪酬是多少？","py":"nǐ de lǐ xiǎng xīn chóu shì duō shǎo？","vi":"Mức lương lý tưởng của bạn là bao nhiêu?","fix":null},{"words":[{"w":"希望","py":"xī wàng"},{"w":"你","py":"nǐ"},{"w":"尽快","py":"jǐn kuài"},{"w":"适应","py":"shì yìng"},{"w":"新工作","py":"xīn gōng zuò"},{"w":"。","py":"。"}],"ans":"希望你尽快适应新工作。","py":"xī wàng nǐ jǐn kuài shì yìng xīn gōng zuò。","vi":"Hy vọng bạn sớm thích nghi với công việc mới.","fix":null},{"words":[{"w":"我","py":"wǒ"},{"w":"非常","py":"fēi cháng"},{"w":"荣幸","py":"róng xìng"},{"w":"能","py":"néng"},{"w":"加入","py":"jiā rù"},{"w":"这个","py":"zhè ge"},{"w":"团队","py":"tuán duì"},{"w":"。","py":"。"}],"ans":"我非常荣幸能加入这个团队。","py":"wǒ fēi cháng róng xìng néng jiā rù zhè ge tuán duì。","vi":"Tôi rất vinh dự được gia nhập đội ngũ này.","fix":null},{"words":[{"w":"怎么","py":"zěn me"},{"w":"开拓","py":"kāi tuò"},{"w":"新市场","py":"xīn shì chǎng"},{"w":"呢","py":"ne"},{"w":"？","py":"？"}],"ans":"怎么开拓新市场呢？","py":"zěn me kāi tuò xīn shì chǎng ne？","vi":"Làm thế nào để mở rộng thị trường mới đây?","fix":null},{"words":[{"w":"检验","py":"jiǎn yàn"},{"w":"主要","py":"zhǔ yào"},{"w":"是","py":"shì"},{"w":"产品","py":"chǎn pǐn"},{"w":"的","py":"de"},{"w":"质量和","py":"zhì liàng hé"},{"w":"安全性","py":"ān quán xìng"},{"w":"。","py":"。"}],"ans":"检验主要是产品的质量和安全性。","py":"jiǎn yàn zhǔ yào shì chǎn pǐn de zhì liàng hé ān quán xìng。","vi":"Kiểm định chủ yếu là kiểm tra chất lượng và tính an toàn của sản phẩm.","fix":null},{"words":[{"w":"它","py":"tā"},{"w":"的","py":"de"},{"w":"最","py":"zuì"},{"w":"大","py":"dà"},{"w":"特点","py":"tè diǎn"},{"w":"是","py":"shì"},{"w":"具有","py":"jù yǒu"},{"w":"智能","py":"zhì néng"},{"w":"对话","py":"duì huà"},{"w":"功能","py":"gōng néng"},{"w":"。","py":"。"}],"ans":"它的最大特点是具有智能对话功能。","py":"tā de zuì dà tè diǎn shì jù yǒu zhì néng duì huà gōng néng。","vi":"Đặc điểm lớn nhất của nó là có chức năng đối thoại thông minh.","fix":null},{"words":[{"w":"这份","py":"zhè fèn"},{"w":"报价单","py":"bào jià dān"},{"w":"市场定价","py":"shì chǎng dìng jià"},{"w":"和成本核算","py":"hé chéng běn hé suàn"},{"w":"包括","py":"bāo kuò"},{"w":"。","py":"。"}],"ans":"这份报价单包括市场定价和成本核算。","py":"zhè fèn bào jià dān bāo kuò shì chǎng dìng jià hé chéng běn hé suàn。","vi":"Bảng báo giá này bao gồm định giá thị trường và hạch toán chi phí.","fix":null},{"words":[{"w":"这样","py":"zhè yàng"},{"w":"才能","py":"cái néng"},{"w":"保证","py":"bǎo zhèng"},{"w":"产品的","py":"chǎn pǐn de"},{"w":"销量","py":"xiāo liàng"},{"w":"。","py":"。"}],"ans":"这样才能保证产品的销量。","py":"zhè yàng cái néng bǎo zhèng chǎn pǐn de xiāo liàng。","vi":"Có như vậy mới đảm bảo được doanh số của sản phẩm.","fix":null},{"words":[{"w":"为","py":"wèi"},{"w":"我们","py":"wǒ men"},{"w":"的","py":"de"},{"w":"合作","py":"hé zuò"},{"w":"干杯","py":"gān bēi"},{"w":"！","py":"！"}],"ans":"为我们的合作干杯！","py":"wèi wǒ men de hé zuò gān bēi！","vi":"Cạn ly vì sự hợp tác của chúng ta!","fix":"Đã sửa: dãy từ gốc có thừa dấu \"! / ！\"."},{"words":[{"w":"咱们","py":"zán men"},{"w":"需要","py":"xū yào"},{"w":"协调","py":"xié tiáo"},{"w":"一下","py":"yī xià"},{"w":"双方的","py":"shuāng fāng de"},{"w":"意见","py":"yì jiàn"},{"w":"。","py":"。"}],"ans":"咱们需要协调一下双方的意见。","py":"zán men xū yào xié tiáo yī xià shuāng fāng de yì jiàn。","vi":"Chúng ta cần phối hợp/điều hoà một chút ý kiến của hai bên.","fix":null},{"words":[{"w":"公司","py":"gōng sī"},{"w":"已经","py":"yǐ jīng"},{"w":"设计","py":"shè jì"},{"w":"出","py":"chū"},{"w":"促销","py":"cù xiāo"},{"w":"方案","py":"fāng àn"},{"w":"了","py":"le"},{"w":"。","py":"。"}],"ans":"公司已经设计出促销方案了。","py":"gōng sī yǐ jīng shè jì chū cù xiāo fāng àn le。","vi":"Công ty đã thiết kế xong phương án khuyến mãi rồi.","fix":"Đã sửa: \"设计出来促销方案\" chưa tự nhiên; dùng \"设计出……了\"."},{"words":[{"w":"这种","py":"zhè zhǒng"},{"w":"活动","py":"huó dòng"},{"w":"对","py":"duì"},{"w":"顾客","py":"gù kè"},{"w":"非常","py":"fēi cháng"},{"w":"有","py":"yǒu"},{"w":"吸引力","py":"xī yǐn lì"},{"w":"。","py":"。"}],"ans":"这种活动对顾客非常有吸引力。","py":"zhè zhǒng huó dòng duì gù kè fēi cháng yǒu xī yǐn lì。","vi":"Hoạt động này rất có sức hút đối với khách hàng.","fix":null},{"words":[{"w":"我们","py":"wǒ men"},{"w":"需要","py":"xū yào"},{"w":"先","py":"xiān"},{"w":"把","py":"bǎ"},{"w":"货物","py":"huò wù"},{"w":"运到","py":"yùn dào"},{"w":"口岸","py":"kǒu àn"},{"w":"。","py":"。"}],"ans":"我们需要先把货物运到口岸。","py":"wǒ men xū yào xiān bǎ huò wù yùn dào kǒu àn。","vi":"Chúng ta cần chuyển hàng đến cảng/cửa khẩu trước.","fix":null},{"words":[{"w":"我们","py":"wǒ men"},{"w":"还","py":"hái"},{"w":"了","py":"le"},{"w":"增加","py":"zēng jiā"},{"w":"英文","py":"yīng wén"},{"w":"说明","py":"shuō míng"},{"w":"。","py":"。"}],"ans":"我们还增加了英文说明。","py":"wǒ men hái zēng jiā le yīng wén shuō míng。","vi":"Chúng tôi còn bổ sung thêm phần giải thích bằng tiếng Anh.","fix":null}],"p3":[{"bank":[{"w":"报到","py":"bào dào","vi":"trình diện, nhận việc"},{"w":"成立","py":"chéng lì","vi":"thành lập"},{"w":"是否","py":"shì fǒu","vi":"có hay không"},{"w":"收集","py":"shōu jí","vi":"thu thập"},{"w":"自信满满","py":"zì xìn mǎn mǎn","vi":"đầy tự tin"}],"items":[{"blank":"你下周一能不能来公司______？","bpy":"nǐ xià zhōu yī néng bù néng lái gōng sī ______？","ans":"报到","full":"你下周一能不能来公司报到？","py":"nǐ xià zhōu yī néng bù néng lái gōng sī bào dào？","vi":"Thứ Hai tuần sau bạn có thể đến công ty trình diện được không?","added":false,"fix":null},{"blank":"请先______客户的信息。","bpy":"qǐng xiān ______ kè hù de xìn xī。","ans":"收集","full":"请先收集客户的信息。","py":"qǐng xiān shōu jí kè hù de xìn xī。","vi":"Xin hãy thu thập thông tin khách hàng trước.","added":false,"fix":null},{"blank":"这家公司是五年前______的。","bpy":"zhè jiā gōng sī shì wǔ nián qián ______ de。","ans":"成立","full":"这家公司是五年前成立的。","py":"zhè jiā gōng sī shì wǔ nián qián chéng lì de。","vi":"Công ty này được thành lập cách đây năm năm.","added":false,"fix":null},{"blank":"虽然这是他第一次参加面试，但他看起来______。","bpy":"suī rán zhè shì tā dì yī cì cān jiā miàn shì， dàn tā kàn qǐ lái ______。","ans":"自信满满","full":"虽然这是他第一次参加面试，但他看起来自信满满。","py":"suī rán zhè shì tā dì yī cì cān jiā miàn shì， dàn tā kàn qǐ lái zì xìn mǎn mǎn。","vi":"Tuy đây là lần đầu anh ấy đi phỏng vấn, nhưng trông anh ấy rất tự tin.","added":false,"fix":null},{"blank":"______录用我们还得再商量一下。","bpy":"______ lù yòng wǒ men hái děi zài shāng liáng yī xià。","ans":"是否","full":"是否录用我们还得再商量一下。","py":"shì fǒu lù yòng wǒ men hái děi zài shāng liáng yī xià。","vi":"Có tuyển dụng hay không, chúng tôi còn phải bàn thêm.","added":false,"fix":null}]},{"bank":[{"w":"开发","py":"kāi fā","vi":"khai thác, phát triển"},{"w":"办理","py":"bàn lǐ","vi":"làm (thủ tục)"},{"w":"信誉","py":"xìn yù","vi":"uy tín"},{"w":"荣幸","py":"róng xìng","vi":"vinh hạnh"},{"w":"关照","py":"guān zhào","vi":"giúp đỡ, chiếu cố"}],"items":[{"blank":"能够担任这个项目的负责人，我感到很______。","bpy":"néng gòu dān rèn zhè ge xiàng mù dì fù zé rén， wǒ gǎn dào hěn ______。","ans":"荣幸","full":"能够担任这个项目的负责人，我感到很荣幸。","py":"néng gòu dān rèn zhè ge xiàng mù dì fù zé rén， wǒ gǎn dào hěn róng xìng。","vi":"Được đảm nhiệm vai trò người phụ trách dự án này, tôi cảm thấy rất vinh hạnh.","added":false,"fix":null},{"blank":"这家代理商经营规范，市场______良好。","bpy":"zhè jiā dài lǐ shāng jīng yíng guī fàn， shì chǎng ______ liáng hǎo。","ans":"信誉","full":"这家代理商经营规范，市场信誉良好。","py":"zhè jiā dài lǐ shāng jīng yíng guī fàn， shì chǎng xìn yù liáng hǎo。","vi":"Đại lý này kinh doanh quy củ, uy tín trên thị trường tốt.","added":false,"fix":null},{"blank":"公司计划明年______华南市场。","bpy":"gōng sī jì huà míng nián ______ huá nán shì chǎng。","ans":"开发","full":"公司计划明年开发华南市场。","py":"gōng sī jì huà míng nián kāi fā huá nán shì chǎng。","vi":"Công ty dự định sang năm khai thác thị trường Hoa Nam.","added":false,"fix":null},{"blank":"我是一个新人，以后的工作请您多加______。","bpy":"wǒ shì yí gè xīn rén， yǐ hòu de gōng zuò qǐng nín duō jiā ______。","ans":"关照","full":"我是一个新人，以后的工作请您多加关照。","py":"wǒ shì yí gè xīn rén， yǐ hòu de gōng zuò qǐng nín duō jiā guān zhào。","vi":"Tôi là người mới, công việc sau này xin ngài giúp đỡ nhiều.","added":false,"fix":null},{"blank":"新同事到职后要先去人事部______入职手续。","bpy":"xīn tóng shì dào zhí hòu yào xiān qù rén shì bù ______ rù zhí shǒu xù。","ans":"办理","full":"新同事到职后要先去人事部办理入职手续。","py":"xīn tóng shì dào zhí hòu yào xiān qù rén shì bù bàn lǐ rù zhí shǒu xù。","vi":"Đồng nghiệp mới sau khi nhận việc phải đến phòng nhân sự làm thủ tục nhập chức trước.","added":false,"fix":null}]},{"bank":[{"w":"的确","py":"dí què","vi":"quả thực"},{"w":"积极","py":"jī jí","vi":"tích cực"},{"w":"策略","py":"cè lüè","vi":"chiến lược"},{"w":"道理","py":"dào lǐ","vi":"lẽ phải, có lý"},{"w":"规模","py":"guī mó","vi":"quy mô"}],"items":[{"blank":"这家代理商______很有经验，但是资金能力一般。","bpy":"zhè jiā dài lǐ shāng ______ hěn yǒu jīng yàn， dàn shì zī jīn néng lì yì bān。","ans":"的确","full":"这家代理商的确很有经验，但是资金能力一般。","py":"zhè jiā dài lǐ shāng dí què hěn yǒu jīng yàn， dàn shì zī jīn néng lì yì bān。","vi":"Đại lý này quả thực rất có kinh nghiệm, nhưng năng lực tài chính chỉ ở mức bình thường.","added":false,"fix":"Đã sửa: đáp án gốc là 规模 (trùng với câu 5, và \"规模很有经验\" không hợp nghĩa) → 的确."},{"blank":"为了提高销量，我们需要制定一个新的销售______。","bpy":"wèi le tí gāo xiāo liàng， wǒ men xū yào zhì dìng yí gè xīn de xiāo shòu ______。","ans":"策略","full":"为了提高销量，我们需要制定一个新的销售策略。","py":"wèi le tí gāo xiāo liàng， wǒ men xū yào zhì dìng yí gè xīn de xiāo shòu cè lüè。","vi":"Để nâng cao doanh số, chúng ta cần đặt ra một chiến lược bán hàng mới.","added":false,"fix":null},{"blank":"他的工作表现非常______，经常主动联系客户。","bpy":"tā de gōng zuò biǎo xiàn fēi cháng ______， jīng cháng zhǔ dòng lián xì kè hù。","ans":"积极","full":"他的工作表现非常积极，经常主动联系客户。","py":"tā de gōng zuò biǎo xiàn fēi cháng jī jí， jīng cháng zhǔ dòng lián xì kè hù。","vi":"Biểu hiện làm việc của anh ấy rất tích cực, thường chủ động liên hệ khách hàng.","added":false,"fix":null},{"blank":"听了你的分析，王经理觉得很有______。","bpy":"tīng le nǐ de fēn xī， wáng jīng lǐ jué de hěn yǒu ______。","ans":"道理","full":"听了你的分析，王经理觉得很有道理。","py":"tīng le nǐ de fēn xī， wáng jīng lǐ jué de hěn yǒu dào lǐ。","vi":"Nghe phân tích của bạn, Giám đốc Vương thấy rất có lý.","added":false,"fix":null},{"blank":"公司现在的______越来越大。","bpy":"gōng sī xiàn zài de ______ yuè lái yuè dà。","ans":"规模","full":"公司现在的规模越来越大。","py":"gōng sī xiàn zài de guī mó yuè lái yuè dà。","vi":"Quy mô của công ty hiện nay ngày càng lớn.","added":false,"fix":null}]},{"bank":[{"w":"消息","py":"xiāo xī","vi":"tin tức"},{"w":"签约","py":"qiān yuē","vi":"ký kết"},{"w":"考虑","py":"kǎo lǜ","vi":"cân nhắc"},{"w":"汇报","py":"huì bào","vi":"báo cáo"},{"w":"营业执照","py":"yíng yè zhí zhào","vi":"giấy phép kinh doanh"}],"items":[{"blank":"这是一件大事，请给我们一点时间回去______一下。","bpy":"zhè shì yī jiàn dà shì， qǐng gěi wǒ men yì diǎn shí jiān huí qù ______ yī xià。","ans":"考虑","full":"这是一件大事，请给我们一点时间回去考虑一下。","py":"zhè shì yī jiàn dà shì， qǐng gěi wǒ men yì diǎn shí jiān huí qù kǎo lǜ yī xià。","vi":"Đây là việc lớn, xin cho chúng tôi chút thời gian về cân nhắc.","added":false,"fix":null},{"blank":"记得带上你们公司的______。","bpy":"jì de dài shàng nǐ men gōng sī de ______。","ans":"营业执照","full":"记得带上你们公司的营业执照。","py":"jì de dài shàng nǐ men gōng sī de yíng yè zhí zhào。","vi":"Nhớ mang theo giấy phép kinh doanh của công ty các bạn.","added":false,"fix":null},{"blank":"我们明天就可以______。","bpy":"wǒ men míng tiān jiù kě yǐ ______。","ans":"签约","full":"我们明天就可以签约。","py":"wǒ men míng tiān jiù kě yǐ qiān yuē。","vi":"Ngày mai chúng ta có thể ký kết.","added":false,"fix":null}]},{"bank":[{"w":"协调","py":"xié tiáo","vi":"phối hợp, điều hoà"},{"w":"考察","py":"kǎo chá","vi":"khảo sát"},{"w":"赠送","py":"zèng sòng","vi":"tặng"},{"w":"款待","py":"kuǎn dài","vi":"chiêu đãi"},{"w":"难得","py":"nán dé","vi":"hiếm có"}],"items":[{"blank":"这次来北京考察是一个______的学习机会。","bpy":"zhè cì lái běi jīng kǎo chá shì yí gè ______ de xué xí jī huì。","ans":"难得","full":"这次来北京考察是一个难得的学习机会。","py":"zhè cì lái běi jīng kǎo chá shì yí gè nán dé de xué xí jī huì。","vi":"Chuyến khảo sát Bắc Kinh lần này là một cơ hội học hỏi hiếm có.","added":false,"fix":null},{"blank":"昨天我专门去______了工厂。","bpy":"zuó tiān wǒ zhuān mén qù ______ le gōng chǎng。","ans":"考察","full":"昨天我专门去考察了工厂。","py":"zuó tiān wǒ zhuān mén qù kǎo chá le gōng chǎng。","vi":"Hôm qua tôi đã đặc biệt đến khảo sát nhà máy.","added":false,"fix":null},{"blank":"双方需要进一步______相关工作。","bpy":"shuāng fāng xū yào jìn yí bù ______ xiāng guān gōng zuò。","ans":"协调","full":"双方需要进一步协调相关工作。","py":"shuāng fāng xū yào jìn yí bù xié tiáo xiāng guān gōng zuò。","vi":"Hai bên cần phối hợp thêm các công việc liên quan.","added":false,"fix":null},{"blank":"为了表示感谢，公司决定向您______一份小礼品。","bpy":"wèi le biǎo shì gǎn xiè， gōng sī jué dìng xiàng nín ______ yī fèn xiǎo lǐ pǐn。","ans":"赠送","full":"为了表示感谢，公司决定向您赠送一份小礼品。","py":"wèi le biǎo shì gǎn xiè， gōng sī jué dìng xiàng nín zèng sòng yī fèn xiǎo lǐ pǐn。","vi":"Để bày tỏ lòng cảm ơn, công ty quyết định tặng ngài một món quà nhỏ.","added":false,"fix":null}]},{"bank":[{"w":"支持","py":"zhī chí","vi":"ủng hộ"},{"w":"保证","py":"bǎo zhèng","vi":"bảo đảm"},{"w":"模式","py":"mó shì","vi":"mô hình"},{"w":"合同","py":"hé tóng","vi":"hợp đồng"}],"items":[{"blank":"只有质量好，才能______产品的销量。","bpy":"zhǐ yǒu zhì liàng hǎo， cái néng ______ chǎn pǐn de xiāo liàng。","ans":"保证","full":"只有质量好，才能保证产品的销量。","py":"zhǐ yǒu zhì liàng hǎo， cái néng bǎo zhèng chǎn pǐn de xiāo liàng。","vi":"Chỉ khi chất lượng tốt mới bảo đảm được doanh số sản phẩm.","added":false,"fix":null}]},{"bank":[{"w":"检验","py":"jiǎn yàn","vi":"kiểm định"},{"w":"厉害","py":"lì hài","vi":"giỏi, ghê gớm"},{"w":"进口","py":"jìn kǒu","vi":"nhập khẩu"},{"w":"时尚","py":"shí shàng","vi":"thời thượng"},{"w":"推出","py":"tuī chū","vi":"tung ra"}],"items":[{"blank":"虽然设备是______的，价格很贵，但是非常值得。","bpy":"suī rán shè bèi shì ______ de， jià gé hěn guì， dàn shì fēi cháng zhí de。","ans":"进口","full":"虽然设备是进口的，价格很贵，但是非常值得。","py":"suī rán shè bèi shì jìn kǒu de， jià gé hěn guì， dàn shì fēi cháng zhí de。","vi":"Tuy thiết bị là hàng nhập khẩu, giá rất đắt, nhưng rất đáng.","added":false,"fix":null},{"blank":"现在的年轻人都喜欢外观______的电子产品。","bpy":"xiàn zài de nián qīng rén dōu xǐ huān wài guān ______ de diàn zi chǎn pǐn。","ans":"时尚","full":"现在的年轻人都喜欢外观时尚的电子产品。","py":"xiàn zài de nián qīng rén dōu xǐ huān wài guān shí shàng de diàn zi chǎn pǐn。","vi":"Giới trẻ ngày nay đều thích các sản phẩm điện tử có vẻ ngoài thời thượng.","added":false,"fix":null},{"blank":"公司计划下个月______新产品。","bpy":"gōng sī jì huà xià gè yuè ______ xīn chǎn pǐn。","ans":"推出","full":"公司计划下个月推出新产品。","py":"gōng sī jì huà xià gè yuè tuī chū xīn chǎn pǐn。","vi":"Công ty dự định tháng sau tung ra sản phẩm mới.","added":false,"fix":"Đã sửa: bổ sung từ 推出 vào khung từ (trước đó đáp án 推出 không có trong khung)."},{"blank":"这款音箱能听懂我的话，真是太______了！","bpy":"zhè kuǎn yīn xiāng néng tīng dǒng wǒ de huà， zhēn shì tài ______ le！","ans":"厉害","full":"这款音箱能听懂我的话，真是太厉害了！","py":"zhè kuǎn yīn xiāng néng tīng dǒng wǒ de huà， zhēn shì tài lì hài le！","vi":"Chiếc loa này nghe hiểu được lời tôi nói, thật quá giỏi!","added":false,"fix":null}]},{"bank":[{"w":"关键","py":"guān jiàn","vi":"mấu chốt"},{"w":"版权","py":"bǎn quán","vi":"bản quyền"},{"w":"精美","py":"jīng měi","vi":"tinh xảo, đẹp"},{"w":"抽奖","py":"chōu jiǎng","vi":"rút thăm trúng thưởng"},{"w":"冲动","py":"chōng dòng","vi":"bốc đồng"}],"items":[{"blank":"这款产品的包装非常______，很多女顾客很喜欢。","bpy":"zhè kuǎn chǎn pǐn de bāo zhuāng fēi cháng ______， hěn duō nǚ gù kè hěn xǐ huān。","ans":"精美","full":"这款产品的包装非常精美，很多女顾客很喜欢。","py":"zhè kuǎn chǎn pǐn de bāo zhuāng fēi cháng jīng měi， hěn duō nǚ gù kè hěn xǐ huān。","vi":"Bao bì của sản phẩm này rất tinh xảo, nhiều khách hàng nữ rất thích.","added":false,"fix":null},{"blank":"降价虽然能吸引顾客，但不是解决问题的______。","bpy":"jiàng jià suī rán néng xī yǐn gù kè， dàn bú shì jiě jué wèn tí de ______。","ans":"关键","full":"降价虽然能吸引顾客，但不是解决问题的关键。","py":"jiàng jià suī rán néng xī yǐn gù kè， dàn bú shì jiě jué wèn tí de guān jiàn。","vi":"Giảm giá tuy thu hút được khách nhưng không phải mấu chốt để giải quyết vấn đề.","added":false,"fix":null},{"blank":"很多顾客在促销活动中会______消费，买了很多不需要的东西。","bpy":"hěn duō gù kè zài cù xiāo huó dòng zhōng huì ______ xiāo fèi， mǎi le hěn duō bù xū yào de dōng xī。","ans":"冲动","full":"很多顾客在促销活动中会冲动消费，买了很多不需要的东西。","py":"hěn duō gù kè zài cù xiāo huó dòng zhōng huì chōng dòng xiāo fèi， mǎi le hěn duō bù xū yào de dōng xī。","vi":"Nhiều khách hàng trong đợt khuyến mãi sẽ mua sắm bốc đồng, mua nhiều thứ không cần.","added":false,"fix":"Đã sửa: bản gốc thiếu chữ 中 (\"在促销活动会…\")."},{"blank":"顾客买完产品后可以参加一次______活动，试试运气。","bpy":"gù kè mǎi wán chǎn pǐn hòu kě yǐ cān jiā yī cì ______ huó dòng， shì shì yùn qì。","ans":"抽奖","full":"顾客买完产品后可以参加一次抽奖活动，试试运气。","py":"gù kè mǎi wán chǎn pǐn hòu kě yǐ cān jiā yī cì chōu jiǎng huó dòng， shì shì yùn qì。","vi":"Sau khi mua sản phẩm, khách hàng có thể tham gia một lần rút thăm trúng thưởng, thử vận may.","added":false,"fix":null}]},{"bank":[{"w":"结汇","py":"jié huì","vi":"kết hối (đổi ngoại tệ thu về)"},{"w":"证书","py":"zhèng shū","vi":"giấy chứng nhận"},{"w":"海外","py":"hǎi wài","vi":"hải ngoại"},{"w":"舱位","py":"cāng wèi","vi":"chỗ (khoang) trên tàu"},{"w":"报关","py":"bào guān","vi":"khai báo hải quan"},{"w":"记录","py":"jì lù","vi":"ghi lại"}],"items":[{"blank":"有很多______客户跟我们联系。","bpy":"yǒu hěn duō ______ kè hù gēn wǒ men lián xì。","ans":"海外","full":"有很多海外客户跟我们联系。","py":"yǒu hěn duō hǎi wài kè hù gēn wǒ men lián xì。","vi":"Có rất nhiều khách hàng nước ngoài liên hệ với chúng tôi.","added":false,"fix":null},{"blank":"现在的______非常紧张，我们需要提前预订。","bpy":"xiàn zài de ______ fēi cháng jǐn zhāng， wǒ men xū yào tí qián yù dìng。","ans":"舱位","full":"现在的舱位非常紧张，我们需要提前预订。","py":"xiàn zài de cāng wèi fēi cháng jǐn zhāng， wǒ men xū yào tí qián yù dìng。","vi":"Hiện nay chỗ trên tàu rất khan hiếm, chúng ta cần đặt trước.","added":false,"fix":null},{"blank":"请把会议内容______下来。","bpy":"qǐng bǎ huì yì nèi róng ______ xià lái。","ans":"记录","full":"请把会议内容记录下来。","py":"qǐng bǎ huì yì nèi róng jì lù xià lái。","vi":"Xin hãy ghi lại nội dung cuộc họp.","added":false,"fix":null}]}],"p4":[{"zh":"小王毕业于经贸大学，他参加面试前上过爱家公司的官网，对公司的情况比较了解。面试时，他准备充分、自信满满，给经理留下了深刻的印象。王经理觉得他专业对口，正是公司急需的人才。","py":"xiǎo wáng bì yè yú jīng mào dà xué， tā cān jiā miàn shì qián shàng guò ài jiā gōng sī de guān wǎng， duì gōng sī de qíng kuàng bǐ jiào liǎo jiě。 miàn shì shí， tā zhǔn bèi chōng fèn、 zì xìn mǎn mǎn， gěi jīng lǐ liú xià le shēn kè de yìn xiàng。 wáng jīng lǐ jué de tā zhuān yè duì kǒu， zhèng shì gōng sī jí xū de rén cái。","vi":"Tiểu Vương tốt nghiệp Đại học Kinh tế Thương mại. Trước khi phỏng vấn, anh đã vào trang web chính thức của công ty Ái Gia nên khá hiểu về công ty. Khi phỏng vấn, anh chuẩn bị đầy đủ, rất tự tin, để lại ấn tượng sâu sắc cho giám đốc. Giám đốc Vương thấy anh học đúng chuyên ngành, đúng là nhân tài mà công ty đang cần gấp.","note":null,"qs":[{"q":"根据这段话，小王在哪儿毕业？","qpy":"gēn jù zhè duàn huà， xiǎo wáng zài nǎ ér bì yè？","qvi":"Theo đoạn văn, Tiểu Vương tốt nghiệp ở đâu?","opts":[{"t":"小王对公司了解且专业对口。","py":"xiǎo wáng duì gōng sī liǎo jiě qiě zhuān yè duì kǒu。","vi":"Tiểu Vương hiểu về công ty và học đúng chuyên ngành."},{"t":"小王想要很高的薪酬。","py":"xiǎo wáng xiǎng yào hěn gāo de xīn chóu。","vi":"Tiểu Vương muốn mức lương rất cao."},{"t":"小王毕业于经贸大学。","py":"xiǎo wáng bì yè yú jīng mào dà xué。","vi":"Tiểu Vương tốt nghiệp Đại học Kinh tế Thương mại."}],"a":2}]},{"zh":"王经理带新同事参观了办公大厦。这里的办公环境不仅很漂亮，而且非常人性化。经理介绍说，销售部和技术部都在七层，这两个部门正努力开发新市场。王经理希望大家在以后的工作中能够互相关照，共同提高公司的信誉。","py":"wáng jīng lǐ dài xīn tóng shì cān guān le bàn gōng dà shà。 zhè lǐ de bàn gōng huán jìng bù jǐn hěn piào liàng， ér qiě fēi cháng rén xìng huà。 jīng lǐ jiè shào shuō， xiāo shòu bù hé jì shù bù dōu zài qī céng， zhè liǎng gè bù mén zhèng nǔ lì kāi fā xīn shì chǎng。 wáng jīng lǐ xī wàng dà jiā zài yǐ hòu de gōng zuò zhōng néng gòu hù xiāng guān zhào， gòng tóng tí gāo gōng sī de xìn yù。","vi":"Giám đốc Vương dẫn đồng nghiệp mới đi tham quan toà nhà văn phòng. Môi trường làm việc ở đây không chỉ đẹp mà còn rất nhân văn, tiện nghi. Giám đốc giới thiệu bộ phận bán hàng và bộ phận kỹ thuật đều ở tầng 7, hai bộ phận này đang nỗ lực khai thác thị trường mới. Giám đốc Vương hy vọng mọi người sau này giúp đỡ lẫn nhau trong công việc, cùng nâng cao uy tín của công ty.","note":null,"qs":[{"q":"这里的办公环境怎么样？","qpy":"zhè lǐ de bàn gōng huán jìng zěn me yàng？","qvi":"Môi trường làm việc ở đây thế nào?","opts":[{"t":"不仅漂亮，而且非常人性化。","py":"bù jǐn piào liàng， ér qiě fēi cháng rén xìng huà。","vi":"Không chỉ đẹp mà còn rất nhân văn, tiện nghi."},{"t":"环境太吵，不适合工作。","py":"huán jìng tài chǎo， bú shì hé gōng zuò。","vi":"Môi trường quá ồn, không thích hợp làm việc."},{"t":"只有销售部的环境好。","py":"zhǐ yǒu xiāo shòu bù de huán jìng hǎo。","vi":"Chỉ có môi trường của bộ phận bán hàng là tốt."}],"a":0},{"q":"销售部和技术部目前的主要任务是什么？","qpy":"xiāo shòu bù hé jì shù bù mù qián de zhǔ yào rèn wù shì shén me？","qvi":"Nhiệm vụ chính hiện nay của bộ phận bán hàng và kỹ thuật là gì?","opts":[{"t":"努力开发新市场。","py":"nǔ lì kāi fā xīn shì chǎng。","vi":"Nỗ lực khai thác thị trường mới."},{"t":"办理入职手续。","py":"bàn lǐ rù zhí shǒu xù。","vi":"Làm thủ tục nhập chức."},{"t":"填写登记表。","py":"tián xiě dēng jì biǎo。","vi":"Điền phiếu đăng ký."}],"a":0}]},{"zh":"开会时，销售团队讨论了怎么开拓新市场。大家认为目前产品在那里的知名度一般，所以需要调整销售策略。经理要求大家积极地工作，以提高销量并扩大公司规模。","py":"kāi huì shí， xiāo shòu tuán duì tǎo lùn le zěn me kāi tuò xīn shì chǎng。 dà jiā rèn wéi mù qián chǎn pǐn zài nà lǐ de zhī míng dù yì bān， suǒ yǐ xū yào tiáo zhěng xiāo shòu cè lüè。 jīng lǐ yāo qiú dà jiā jī jí dì gōng zuò， yǐ tí gāo xiāo liàng bìng kuò dà gōng sī guī mó。","vi":"Khi họp, đội ngũ bán hàng thảo luận cách mở rộng thị trường mới. Mọi người cho rằng độ nổi tiếng của sản phẩm ở đó hiện chỉ ở mức bình thường nên cần điều chỉnh chiến lược bán hàng. Giám đốc yêu cầu mọi người làm việc tích cực để nâng cao doanh số và mở rộng quy mô công ty.","note":null,"qs":[{"q":"销售团队在会议上讨论了什么？","qpy":"xiāo shòu tuán duì zài huì yì shàng tǎo lùn le shén me？","qvi":"Đội ngũ bán hàng đã thảo luận điều gì trong cuộc họp?","opts":[{"t":"怎么开拓新市场。","py":"zěn me kāi tuò xīn shì chǎng。","vi":"Làm thế nào để mở rộng thị trường mới."},{"t":"怎么卖产品。","py":"zěn me mài chǎn pǐn。","vi":"Làm thế nào để bán sản phẩm."},{"t":"怎么习惯新的工作。","py":"zěn me xí guàn xīn de gōng zuò。","vi":"Làm thế nào để quen với công việc mới."}],"a":0},{"q":"为什么大家建议要调整销售策略？","qpy":"wèi shén me dà jiā jiàn yì yào tiáo zhěng xiāo shòu cè lüè？","qvi":"Vì sao mọi người đề nghị điều chỉnh chiến lược bán hàng?","opts":[{"t":"因为资金能力太强了。","py":"yīn wèi zī jīn néng lì tài qiáng le。","vi":"Vì năng lực tài chính quá mạnh."},{"t":"因为产品的知名度一般。","py":"yīn wèi chǎn pǐn de zhī míng dù yì bān。","vi":"Vì độ nổi tiếng của sản phẩm chỉ ở mức bình thường."},{"t":"因为不需要招揽顾客。","py":"yīn wèi bù xū yào zhāo lǎn gù kè。","vi":"Vì không cần thu hút khách hàng."}],"a":1}]},{"zh":"王经理现在正式邀请刘经理下周一到北京面谈合作的事情。从大连到北京坐高铁或者坐飞机都很方便。为了能顺利地在现场签约，刘经理需要带上公司的营业执照和法人的委托书。","py":"wáng jīng lǐ xiàn zài zhèng shì yāo qǐng liú jīng lǐ xià zhōu yī dào běi jīng miàn tán hé zuò de shì qíng。 cóng dà lián dào běi jīng zuò gāo tiě huò zhě zuò fēi jī dōu hěn fāng biàn。 wèi le néng shùn lì dì zài xiàn chǎng qiān yuē， liú jīng lǐ xū yào dài shàng gōng sī de yíng yè zhí zhào hé fǎ rén de wěi tuō shū。","vi":"Giám đốc Vương chính thức mời Giám đốc Lưu thứ Hai tuần sau đến Bắc Kinh trao đổi trực tiếp về việc hợp tác. Từ Đại Liên đến Bắc Kinh đi tàu cao tốc hay máy bay đều rất tiện. Để ký kết tại chỗ được thuận lợi, Giám đốc Lưu cần mang theo giấy phép kinh doanh và giấy uỷ quyền của pháp nhân.","note":"Đã sửa: xoá khoảng trắng thừa trong \"下周一 到北京\".","qs":[{"q":"王经理邀请刘经理去北京做什么？","qpy":"wáng jīng lǐ yāo qǐng liú jīng lǐ qù běi jīng zuò shén me？","qvi":"Giám đốc Vương mời Giám đốc Lưu đến Bắc Kinh để làm gì?","opts":[{"t":"办理入职手续。","py":"bàn lǐ rù zhí shǒu xù。","vi":"Làm thủ tục nhập chức."},{"t":"面谈讨论合作的事情。","py":"miàn tán tǎo lùn hé zuò de shì qíng。","vi":"Gặp mặt trao đổi về việc hợp tác."},{"t":"参加面试。","py":"cān jiā miàn shì。","vi":"Tham gia phỏng vấn."}],"a":1}]},{"zh":"王经理和刘经理正在讨论两家公司的合作模式。王经理介绍了两种方式：一种是按照原价销售，公司给代理商利润分成；另一种是公司给底价，由代理商自行加价销售。","py":"wáng jīng lǐ hé liú jīng lǐ zhèng zài tǎo lùn liǎng jiā gōng sī de hé zuò mó shì。 wáng jīng lǐ jiè shào le liǎng zhǒng fāng shì： yī zhǒng shì àn zhào yuán jià xiāo shòu， gōng sī gěi dài lǐ shāng lì rùn fēn chéng； lìng yī zhǒng shì gōng sī gěi dǐ jià， yóu dài lǐ shāng zì xíng jiā jià xiāo shòu。","vi":"Giám đốc Vương và Giám đốc Lưu đang bàn về mô hình hợp tác giữa hai công ty. Giám đốc Vương giới thiệu hai cách: một là bán theo giá gốc, công ty chia lợi nhuận cho đại lý; hai là công ty đưa giá sàn, đại lý tự cộng thêm giá để bán.","note":null,"qs":[{"q":"王经理介绍了几种合作模式？","qpy":"wáng jīng lǐ jiè shào le jǐ zhǒng hé zuò mó shì？","qvi":"Giám đốc Vương giới thiệu mấy mô hình hợp tác?","opts":[{"t":"一种","py":"yī zhǒng","vi":"Một loại"},{"t":"三种","py":"sān zhǒng","vi":"Ba loại"},{"t":"两种","py":"liǎng zhǒng","vi":"Hai loại"}],"a":2}]},{"zh":"今天李晓光带刘经理参观了爱家公司的生产车间。这里的设备都是自动化的，生产效率很高。李晓光说，虽然这些进口设备非常贵，但能让产品质量更有保障。参观完车间后，刘经理看到检验室里的人员正在负责产品的安全性和语音识别情况的检验工作。","py":"jīn tiān lǐ xiǎo guāng dài liú jīng lǐ cān guān le ài jiā gōng sī de shēng chǎn chē jiān。 zhè lǐ de shè bèi dōu shì zì dòng huà de， shēng chǎn xiào lǜ hěn gāo。 lǐ xiǎo guāng shuō， suī rán zhè xiē jìn kǒu shè bèi fēi cháng guì， dàn néng ràng chǎn pǐn zhì liàng gèng yǒu bǎo zhàng。 cān guān wán chē jiān hòu， liú jīng lǐ kàn dào jiǎn yàn shì lǐ de rén yuán zhèng zài fù zé chǎn pǐn de ān quán xìng hé yǔ yīn shí bié qíng kuàng de jiǎn yàn gōng zuò。","vi":"Hôm nay Lý Hiểu Quang dẫn Giám đốc Lưu tham quan xưởng sản xuất của công ty Ái Gia. Thiết bị ở đây đều tự động hoá, hiệu suất sản xuất rất cao. Lý Hiểu Quang nói tuy các thiết bị nhập khẩu này rất đắt nhưng giúp chất lượng sản phẩm được đảm bảo hơn. Tham quan xưởng xong, Giám đốc Lưu thấy nhân viên trong phòng kiểm định đang phụ trách kiểm tra độ an toàn và tình hình nhận dạng giọng nói của sản phẩm.","note":null,"qs":[{"q":"为什么李晓光认为买贵重的进口设备是“值得的”？","qpy":"wèi shén me lǐ xiǎo guāng rèn wéi mǎi guì zhòng de jìn kǒu shè bèi shì “zhí de de”？","qvi":"Vì sao Lý Hiểu Quang cho rằng mua thiết bị nhập khẩu đắt tiền là “đáng giá”?","opts":[{"t":"因为可以减少生产工人的数量。","py":"yīn wèi kě yǐ jiǎn shǎo shēng chǎn gōng rén de shù liàng。","vi":"Vì có thể giảm số lượng công nhân sản xuất."},{"t":"因为这些设备的外观非常时尚。","py":"yīn wèi zhè xiē shè bèi de wài guān fēi cháng shí shàng。","vi":"Vì vẻ ngoài của những thiết bị này rất thời thượng."},{"t":"因为能提高生产效率并保障产品质量。","py":"yīn wèi néng tí gāo shēng chǎn xiào lǜ bìng bǎo zhàng chǎn pǐn zhì liàng。","vi":"Vì có thể nâng cao hiệu suất sản xuất và đảm bảo chất lượng sản phẩm."}],"a":2},{"q":"检验室里的人员负责哪些方面的工作？","qpy":"jiǎn yàn shì lǐ de rén yuán fù zé nǎ xiē fāng miàn de gōng zuò？","qvi":"Nhân viên trong phòng kiểm định phụ trách những mảng công việc nào?","opts":[{"t":"负责产品的成本核算。","py":"fù zé chǎn pǐn de chéng běn hé suàn。","vi":"Phụ trách hạch toán chi phí sản phẩm."},{"t":"负责检验产品的安全性和语音识别。","py":"fù zé jiǎn yàn chǎn pǐn de ān quán xìng hé yǔ yīn shí bié。","vi":"Phụ trách kiểm tra độ an toàn và nhận dạng giọng nói của sản phẩm."},{"t":"负责给新职员办理入职手续。","py":"fù zé gěi xīn zhí yuán bàn lǐ rù zhí shǒu xù。","vi":"Phụ trách làm thủ tục nhập chức cho nhân viên mới."}],"a":1}]},{"zh":"在北京的时候，刘经理不仅考察了爱家公司的工厂，还现场下了订单。为了表示感谢和信任，王经理代表公司向刘经理赠送了一份小礼品，并请他笑纳这份心意。刘经理觉得不好意思，但李晓光说这是他最想带回家的“家家”音箱，刘经理最终恭敬不如从命，愉快地收下了礼品。","py":"zài běi jīng de shí hòu， liú jīng lǐ bù jǐn kǎo chá le ài jiā gōng sī de gōng chǎng， hái xiàn chǎng xià le dìng dān。 wèi le biǎo shì gǎn xiè hé xìn rèn， wáng jīng lǐ dài biǎo gōng sī xiàng liú jīng lǐ zèng sòng le yī fèn xiǎo lǐ pǐn， bìng qǐng tā xiào nà zhè fèn xīn yì。 liú jīng lǐ jué de bù hǎo yì sī， dàn lǐ xiǎo guāng shuō zhè shì tā zuì xiǎng dài huí jiā de “jiā jiā” yīn xiāng， liú jīng lǐ zuì zhōng gōng jìng bù rú cóng mìng， yú kuài dì shōu xià le lǐ pǐn。","vi":"Khi ở Bắc Kinh, Giám đốc Lưu không chỉ khảo sát nhà máy của công ty Ái Gia mà còn đặt đơn hàng ngay tại chỗ. Để bày tỏ lòng cảm ơn và tin tưởng, Giám đốc Vương thay mặt công ty tặng Giám đốc Lưu một món quà nhỏ và mời ông vui lòng nhận lấy tấm lòng này. Giám đốc Lưu thấy ngại, nhưng Lý Hiểu Quang nói đây là chiếc loa “Gia Gia” mà ông muốn mang về nhà nhất; cuối cùng Giám đốc Lưu “cung kính không bằng tuân mệnh” và vui vẻ nhận quà.","note":"Lưu ý: trong câu \"李晓光说这是他最想带回家的‘家家’音箱\", không rõ “他” chỉ ai và \"家家\" có thể là tên sản phẩm khác (ví dụ \"爱家\"). Giữ nguyên bản gốc, bạn nên đối chiếu giáo trình.","qs":[{"q":"刘经理在北京期间完成了哪个活动？","qpy":"liú jīng lǐ zài běi jīng qī jiān wán chéng le nǎ ge huó dòng？","qvi":"Trong thời gian ở Bắc Kinh, Giám đốc Lưu đã hoàn thành hoạt động nào?","opts":[{"t":"参加了新职员招聘面试。","py":"cān jiā le xīn zhí yuán zhāo pìn miàn shì。","vi":"Tham gia phỏng vấn tuyển nhân viên mới."},{"t":"办理入职手续。","py":"bàn lǐ rù zhí shǒu xù。","vi":"Làm thủ tục nhập chức."},{"t":"考察了工厂和下了订单。","py":"kǎo chá le gōng chǎng hé xià le dìng dān。","vi":"Khảo sát nhà máy và đặt đơn hàng."}],"a":2},{"q":"王经理为什么要向刘经理赠送礼品？","qpy":"wáng jīng lǐ wèi shén me yào xiàng liú jīng lǐ zèng sòng lǐ pǐn？","qvi":"Vì sao Giám đốc Vương tặng quà cho Giám đốc Lưu?","opts":[{"t":"为了感谢刘经理对公司的支持和信任。","py":"wèi le gǎn xiè liú jīng lǐ duì gōng sī de zhī chí hé xìn rèn。","vi":"Để cảm ơn sự ủng hộ và tin tưởng của Giám đốc Lưu đối với công ty."},{"t":"为了刺激刘经理进行冲动消费。","py":"wèi le cì jī liú jīng lǐ jìn xíng chōng dòng xiāo fèi。","vi":"Để kích thích Giám đốc Lưu mua sắm bốc đồng."},{"t":"因为刘经理在考察时辛苦了。","py":"yīn wèi liú jīng lǐ zài kǎo chá shí xīn kǔ le。","vi":"Vì Giám đốc Lưu vất vả trong lúc khảo sát."}],"a":0}]},{"zh":"李晓光发现年轻人非常喜欢听音乐，但因为版权管理很严，很多歌曲都需要花钱才可以听歌，消费压力很大。他建议公司建立音乐平台，只要买了音箱就可以免费听音乐。王经理认为这个方案针对了客户的需求，比送礼品更划算，对后续的销售非常有利。","py":"lǐ xiǎo guāng fā xiàn nián qīng rén fēi cháng xǐ huān tīng yīn yuè， dàn yīn wèi bǎn quán guǎn lǐ hěn yán， hěn duō gē qǔ dōu xū yào huā qián cái kě yǐ tīng gē， xiāo fèi yā lì hěn dà。 tā jiàn yì gōng sī jiàn lì yīn yuè píng tái， zhǐ yào mǎi le yīn xiāng jiù kě yǐ miǎn fèi tīng yīn yuè。 wáng jīng lǐ rèn wéi zhè ge fāng àn zhēn duì le kè hù de xū qiú， bǐ sòng lǐ pǐn gèng huá suàn， duì hòu xù de xiāo shòu fēi cháng yǒu lì。","vi":"Lý Hiểu Quang phát hiện giới trẻ rất thích nghe nhạc, nhưng vì quản lý bản quyền rất chặt, nhiều bài hát phải bỏ tiền mới nghe được, áp lực chi tiêu rất lớn. Anh đề xuất công ty xây dựng nền tảng âm nhạc, chỉ cần mua loa là có thể nghe nhạc miễn phí. Giám đốc Vương cho rằng phương án này nhắm đúng nhu cầu khách hàng, có lợi hơn việc tặng quà, rất thuận lợi cho việc bán hàng sau này.","note":null,"qs":[{"q":"年轻人遇到了什么问题？","qpy":"nián qīng rén yù dào le shén me wèn tí？","qvi":"Giới trẻ gặp vấn đề gì?","opts":[{"t":"年轻人不喜欢在手机上听音乐。","py":"nián qīng rén bù xǐ huān zài shǒu jī shàng tīng yīn yuè。","vi":"Giới trẻ không thích nghe nhạc trên điện thoại."},{"t":"音乐版权管理严格，听歌都需要花钱。","py":"yīn yuè bǎn quán guǎn lǐ yán gé， tīng gē dōu xū yào huā qián。","vi":"Quản lý bản quyền âm nhạc nghiêm ngặt, nghe nhạc đều phải tốn tiền."},{"t":"没有适合年轻人的音乐平台。","py":"méi yǒu shì hé nián qīng rén de yīn yuè píng tái。","vi":"Không có nền tảng âm nhạc phù hợp với giới trẻ."}],"a":1}]},{"zh":"为了一份海外订单，李晓光按照客户的要求重新设计了外包装并增加了英文说明。虽然出口手续办理得很顺利，但在发货时遇到了一些问题：天津口岸由于没有舱位，不能按时发货。为了保证按时交货，公司决定改从最近的大连口岸发货。虽然这导致物流成本增加了很多，但为了信誉，必须赶快联系物流公司运送货物。","py":"wèi le yī fèn hǎi wài dìng dān， lǐ xiǎo guāng àn zhào kè hù de yāo qiú chóng xīn shè jì le wài bāo zhuāng bìng zēng jiā le yīng wén shuō míng。 suī rán chū kǒu shǒu xù bàn lǐ dé hěn shùn lì， dàn zài fā huò shí yù dào le yī xiē wèn tí： tiān jīn kǒu àn yóu yú méi yǒu cāng wèi， bù néng àn shí fā huò。 wèi le bǎo zhèng àn shí jiāo huò， gōng sī jué dìng gǎi cóng zuì jìn de dà lián kǒu àn fā huò。 suī rán zhè dǎo zhì wù liú chéng běn zēng jiā le hěn duō， dàn wèi le xìn yù， bì xū gǎn kuài lián xì wù liú gōng sī yùn sòng huò wù。","vi":"Vì một đơn hàng nước ngoài, Lý Hiểu Quang đã thiết kế lại bao bì bên ngoài theo yêu cầu của khách và bổ sung thêm phần giải thích bằng tiếng Anh. Tuy thủ tục xuất khẩu làm rất thuận lợi, nhưng khi giao hàng lại gặp một số vấn đề: cảng Thiên Tân do không còn chỗ trên tàu nên không thể giao hàng đúng hạn. Để bảo đảm giao hàng đúng hạn, công ty quyết định chuyển sang xuất từ cảng Đại Liên gần nhất. Tuy điều này làm chi phí logistics tăng lên nhiều, nhưng vì uy tín, phải nhanh chóng liên hệ công ty logistics để vận chuyển hàng.","note":null,"qs":[{"q":"改成从大连口岸发货，对公司来说最大的影响是什么？","qpy":"gǎi chéng cóng dà lián kǒu àn fā huò， duì gōng sī lái shuō zuì dà de yǐng xiǎng shì shén me？","qvi":"Chuyển sang giao hàng từ cảng Đại Liên, ảnh hưởng lớn nhất với công ty là gì?","opts":[{"t":"客户取消了海外订单。","py":"kè hù qǔ xiāo le hǎi wài dìng dān。","vi":"Khách hàng huỷ đơn hàng nước ngoài."},{"t":"物流成本增加了很多。","py":"wù liú chéng běn zēng jiā le hěn duō。","vi":"Chi phí logistics tăng lên nhiều."},{"t":"产品不能通过质量检验。","py":"chǎn pǐn bù néng tōng guò zhì liàng jiǎn yàn。","vi":"Sản phẩm không thể vượt qua kiểm định chất lượng."}],"a":1}]}]}</script>
+<script>
+(function(){
+"use strict";
+var D = JSON.parse(document.getElementById("data").textContent);
+var app = document.getElementById("app");
+var PARTS = {
+  1:{name:"Trắc nghiệm", desc:"Nghĩa của từ, ngữ pháp, chọn đáp án đúng"},
+  2:{name:"Sắp xếp câu", desc:"Chạm vào các từ để ghép thành câu đúng"},
+  3:{name:"Điền từ", desc:"Chọn từ trong khung điền vào chỗ trống"},
+  4:{name:"Đọc hiểu", desc:"Đọc đoạn văn rồi trả lời câu hỏi"}
+};
+var LET = "ABCDEF";
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function zh(s){return esc(s).replace(/([　-〿㐀-鿿＀-￯]+)/g,'<span class="zh">$1</span>')}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function range(n){var r=[];for(var i=0;i<n;i++)r.push(i);return r}
+
+/* ---------- lưu trữ (chỉ là tiện ích cho riêng trình duyệt này) ---------- */
+var KEY="tm-on-tap-v2", store;
+function loadStore(){
+  var d={};
+  try{d=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+  store={settings:Object.assign({shuffleQ:true,shuffleO:true,pinyin:false},d.settings||{}),best:d.best||{},history:d.history||[]};
+}
+function saveStore(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+loadStore();
+
+/* ---------- kho câu hỏi ---------- */
+var POOL={1:[],2:[],3:[],4:[]}, BYID={}, uid=0;
+function add(p,o){o.id="q"+(uid++);o.part=p;POOL[p].push(o);BYID[o.id]=o}
+D.p1.forEach(function(x){add(1,{kind:"mcq",q:x.q,qpy:x.qpy,opts:x.opts,a:x.a,notes:x.notes,fix:x.fix})});
+D.p2.forEach(function(x){add(2,{kind:"order",words:x.words,ans:x.ans,py:x.py,vi:x.vi,fix:x.fix})});
+D.p3.forEach(function(g,gi){g.items.forEach(function(it){add(3,{kind:"fill",group:gi,bank:g.bank,blank:it.blank,bpy:it.bpy,a:it.ans,full:it.full,py:it.py,vi:it.vi,added:it.added,fix:it.fix})})});
+D.p4.forEach(function(p,pi){p.qs.forEach(function(q){add(4,{kind:"mcq",passage:pi,q:q.q,qpy:q.qpy,qvi:q.qvi,opts:q.opts,a:q.a})})});
+var TOTALS={1:POOL[1].length,2:POOL[2].length,3:POOL[3].length,4:POOL[4].length};
+var ALLN=TOTALS[1]+TOTALS[2]+TOTALS[3]+TOTALS[4];
+
+/* ---------- phiên làm bài ---------- */
+var S=null, view="home", filter="all";
+function makeSession(parts,onlyIds,label,key){
+  var items=[];
+  parts.forEach(function(p){
+    var list=POOL[p].slice();
+    if(onlyIds)list=list.filter(function(x){return onlyIds.indexOf(x.id)>=0});
+    if(store.settings.shuffleQ&&(p===1||p===2))list=shuffle(list);
+    items=items.concat(list);
+  });
+  var ord={},num={};
+  items.forEach(function(it,i){
+    num[it.id]=i+1;
+    if(it.kind==="mcq")ord[it.id]=store.settings.shuffleO?shuffle(range(it.opts.length)):range(it.opts.length);
+    else if(it.kind==="order"){
+      var o=range(it.words.length),tries=0;
+      do{o=shuffle(range(it.words.length));tries++}while(tries<10&&o.every(function(v,i){return v===i}));
+      ord[it.id]=o;
+    }else ord[it.id]=store.settings.shuffleO?shuffle(range(it.bank.length)):range(it.bank.length);
+  });
+  S={items:items,ord:ord,num:num,ans:{},submitted:false,confirming:false,label:label,key:key||null,parts:parts,res:null};
+  items.forEach(function(it){if(it.kind==="order")S.ans[it.id]=[]});
+}
+function answered(it){
+  var a=S.ans[it.id];
+  if(it.kind==="order")return a.length===it.words.length;
+  return a!==undefined;
+}
+function isCorrect(it){
+  var a=S.ans[it.id];
+  if(it.kind==="mcq")return a===it.a;
+  if(it.kind==="fill")return a===it.a;
+  if(a.length!==it.words.length)return false;
+  return a.map(function(i){return it.words[i].w}).join("")===it.ans;
+}
+
+/* ---------- vẽ từng thẻ câu hỏi ---------- */
+function notesHtml(list){
+  return list.map(function(n){return '<div class="note"><span class="zh">'+esc(n.zh)+'</span><span class="py">'+esc(n.py)+'</span><span class="vi">'+esc(n.vi)+'</span></div>'}).join("");
+}
+function fbBlock(ok,state,head,body,open){
+  return '<div class="fb '+(ok?"ok":"bad")+'"><div class="fbh">'+state+'</div>'+head+
+    '<details'+(open?" open":"")+'><summary>Giải thích</summary>'+body+'</details></div>';
+}
+function cardHtml(it){
+  var sub=S.submitted, ok=sub&&isCorrect(it), py=store.settings.pinyin;
+  var cls="q"+(sub?(ok?" rok":" rbad"):"");
+  var h='<article class="'+cls+'" id="q-'+it.id+'">';
+  if(it.kind==="mcq")h+=mcqHtml(it,sub,ok,py);
+  else if(it.kind==="order")h+=orderHtml(it,sub,ok,py);
+  else h+=fillHtml(it,sub,ok,py);
+  return h+"</article>";
+}
+function head(it,inner,pyline){
+  return '<div class="qh"><span class="qn">'+S.num[it.id]+'</span><div class="qt">'+inner+(pyline?'<span class="py">'+esc(pyline)+'</span>':"")+'</div></div>';
+}
+function mcqHtml(it,sub,ok,py){
+  var a=S.ans[it.id], ord=S.ord[it.id];
+  var h=head(it,zh(it.q),(py||sub)?it.qpy:"");
+  h+='<div class="opts">'+ord.map(function(oi,pos){
+    var o=it.opts[oi],c="";
+    if(!sub){if(a===oi)c=" sel"}else{if(oi===it.a)c=" ok";else if(a===oi)c=" bad"}
+    return '<button class="opt'+c+'" data-act="pick" data-id="'+it.id+'" data-i="'+oi+'"'+(sub?" disabled":"")+'>'+
+      '<span class="lt">'+LET[pos]+'</span><span class="ot">'+zh(o.t)+((py||sub)&&o.py?'<span class="py">'+esc(o.py)+'</span>':"")+(sub&&o.vi?'<span class="vi">'+esc(o.vi)+'</span>':"")+'</span>'+
+      (sub&&oi===it.a?'<b class="mk">✓</b>':(sub&&a===oi?'<b class="mk">✗</b>':""))+'</button>';
+  }).join("")+'</div>';
+  if(sub){
+    var state=ok?"Đúng":(a===undefined?"Chưa trả lời":"Sai");
+    var headp="";
+    if(!ok){
+      headp='<p>Đáp án đúng: <b>'+LET[ord.indexOf(it.a)]+'</b>. '+zh(it.opts[it.a].t)+'</p>';
+      if(a!==undefined)headp+='<p>Bạn đã chọn: <b>'+LET[ord.indexOf(a)]+'</b>. '+zh(it.opts[a].t)+'</p>';
+    }
+    var body=it.notes?notesHtml(it.notes):'<div class="note"><span class="vi" style="margin:0">'+esc(it.qvi)+'</span></div>';
+    if(it.fix)body+='<div class="fix">✎ '+esc(it.fix)+'</div>';
+    h+=fbBlock(ok,state,headp,body,!ok);
+  }
+  return h;
+}
+function orderHtml(it,sub,ok,py){
+  var placed=S.ans[it.id], ord=S.ord[it.id];
+  var h=head(it,"Sắp xếp các từ thành câu hoàn chỉnh"+(it.words.length?"":""),"");
+  function chip(i,act,dis){
+    var w=it.words[i];
+    return '<button class="w" data-act="'+act+'" data-id="'+it.id+'" data-i="'+i+'"'+(dis?" disabled":"")+'><span class="zh">'+esc(w.w)+'</span>'+(py?'<span class="py">'+esc(w.py)+'</span>':"")+'</button>';
+  }
+  h+='<div class="slot'+(sub?(ok?" ok":" bad"):"")+'">'+(placed.length?placed.map(function(i){return chip(i,"unplace",sub)}).join(""):'<em>Chạm vào các từ bên dưới để ghép câu</em>')+'</div>';
+  if(!sub){
+    h+='<div class="pool">'+ord.filter(function(i){return placed.indexOf(i)<0}).map(function(i){return chip(i,"place",false)}).join("")+'</div>';
+    if(placed.length)h+='<button class="clr" data-act="clear" data-id="'+it.id+'">Xoá hết, làm lại câu này</button>';
+  }else{
+    var body='<div class="note"><span class="zh" style="font-size:1.2em">'+esc(it.ans)+'</span><span class="py">'+esc(it.py)+'</span><span class="vi">'+esc(it.vi)+'</span></div>';
+    if(it.fix)body+='<div class="fix">✎ '+esc(it.fix)+'</div>';
+    var state=ok?"Đúng":(placed.length?"Sai":"Chưa trả lời");
+    h+=fbBlock(ok,state,ok?"":'<p>Câu đúng: <span class="zh">'+esc(it.ans)+'</span></p>',body,!ok);
+  }
+  return h;
+}
+function fillHtml(it,sub,ok,py){
+  var a=S.ans[it.id], ord=S.ord[it.id];
+  var parts=it.blank.split("______");
+  var bl='<span class="blank'+(sub?(ok?" ok":" bad"):"")+'">'+(a!==undefined?'<span class="zh">'+esc(a)+'</span>':"&nbsp;")+'</span>';
+  var sent='<div class="sent">'+zh(parts[0])+bl+zh(parts[1]||"")+(it.added?'<span class="tag">bổ sung</span>':"")+'</div>';
+  var h='<div class="qh"><span class="qn">'+S.num[it.id]+'</span><div class="qt">'+sent+((py||sub)?'<span class="py">'+esc(it.bpy)+'</span>':"")+'</div></div>';
+  h+='<div class="pool">'+ord.map(function(bi){
+    var b=it.bank[bi],sel=a===b.w;
+    return '<button class="w'+(sel&&!sub?" sel":"")+'" style="'+(sel&&!sub?"background:var(--accent);color:var(--accent-ink);border-color:var(--accent)":"")+'" data-act="fill" data-id="'+it.id+'" data-w="'+esc(b.w)+'"'+(sub?" disabled":"")+'><span class="zh">'+esc(b.w)+'</span>'+(py?'<span class="py">'+esc(b.py)+'</span>':"")+'</button>';
+  }).join("")+'</div>';
+  if(sub){
+    var body='<div class="note"><span class="zh" style="font-size:1.1em">'+esc(it.full)+'</span><span class="py">'+esc(it.py)+'</span><span class="vi">'+esc(it.vi)+'</span></div>';
+    if(it.fix)body+='<div class="fix">✎ '+esc(it.fix)+'</div>';
+    var head2=ok?"":'<p>Đáp án đúng: <b class="zh">'+esc(it.a)+'</b>'+(a!==undefined?' &nbsp;·&nbsp; Bạn chọn: <span class="zh">'+esc(a)+'</span>':"")+'</p>';
+    h+=fbBlock(ok,ok?"Đúng":(a===undefined?"Chưa trả lời":"Sai"),head2,body,!ok);
+  }
+  return h;
+}
+
+/* ---------- danh sách câu hỏi ---------- */
+function listHtml(items){
+  var h="",lastPart=0,lastGroup=-1,lastPassage=-1;
+  items.forEach(function(it){
+    if(it.part!==lastPart){
+      var n=items.filter(function(x){return x.part===it.part}).length;
+      h+='<div class="sec"><b>Phần '+it.part+' · '+PARTS[it.part].name+'</b><span>'+n+' câu</span></div>';
+      lastPart=it.part;lastGroup=-1;lastPassage=-1;
+    }
+    if(it.kind==="fill"&&it.group!==lastGroup){
+      lastGroup=it.group;
+      h+='<div class="gh"><b>Nhóm '+(it.group+1)+' · Khung từ</b><div class="bankl">'+it.bank.map(function(b){
+        return '<span><span class="zh">'+esc(b.w)+'</span> <small style="color:var(--muted)">'+(store.settings.pinyin?esc(b.py)+' · ':"")+esc(b.vi)+'</small></span>';
+      }).join("")+'</div></div>';
+    }
+    if(it.part===4&&it.passage!==lastPassage){
+      lastPassage=it.passage;
+      var p=D.p4[it.passage];
+      h+='<div class="psg"><b>Đoạn văn '+(it.passage+1)+'</b><p>'+zh(p.zh)+'</p>'+((store.settings.pinyin||S.submitted)?'<span class="py">'+esc(p.py)+'</span>':"")+
+        (S.submitted?'<details><summary>Xem bản dịch</summary><span class="vi" style="font-size:.95em">'+esc(p.vi)+'</span>'+(p.note?'<div class="fix">✎ '+esc(p.note)+'</div>':"")+'</details>':"")+'</div>';
+    }
+    h+=cardHtml(it);
+  });
+  return h;
+}
+
+/* ---------- màn hình ---------- */
+function fmtDate(t){var d=new Date(t);function z(n){return n<10?"0"+n:n}return z(d.getDate())+"/"+z(d.getMonth()+1)+" "+z(d.getHours())+":"+z(d.getMinutes())}
+function sw(name,on,title,hint){
+  return '<div class="tg"><span>'+title+'<small>'+hint+'</small></span><button class="sw'+(on?" on":"")+'" role="switch" aria-checked="'+on+'" aria-label="'+title+'" data-act="set" data-k="'+name+'"></button></div>';
+}
+function homeView(){
+  view="home";
+  var h='<main class="wrap"><div class="hero"><div class="stamp" aria-hidden="true">商</div><div><h1>Ôn tập Tiếng Trung Thương mại</h1><p class="sub">'+ALLN+' câu · 4 phần · mỗi câu 1 điểm · làm lại không giới hạn</p></div></div>';
+  h+='<button class="btn primary wide start" data-act="startAll">Làm cả bài ('+ALLN+' câu)</button><div class="parts">';
+  [1,2,3,4].forEach(function(p){
+    var b=store.best["p"+p];
+    h+='<button class="pcard" data-act="startPart" data-p="'+p+'"><span class="ph"><b>Phần '+p+' · '+PARTS[p].name+'</b><span class="cnt">'+TOTALS[p]+' câu</span></span><span class="pd">'+PARTS[p].desc+'</span>'+(b?'<span class="best">Điểm cao nhất: '+b.score+'/'+b.total+'</span>':"")+'</button>';
+  });
+  h+='</div><h2>Tuỳ chọn</h2><div class="panel">'+
+    sw("shuffleQ",store.settings.shuffleQ,"Xáo trộn thứ tự câu","Áp dụng cho Phần 1 và Phần 2")+
+    sw("shuffleO",store.settings.shuffleO,"Xáo trộn đáp án","Đổi vị trí A, B, C mỗi lần làm")+
+    sw("pinyin",store.settings.pinyin,"Hiện pinyin khi làm bài","Có thể bật tắt ngay trong lúc làm")+'</div>';
+  if(store.history.length){
+    h+='<h2>Các lần làm gần đây</h2><div class="panel hist">'+store.history.map(function(r){
+      return '<div class="hrow"><span>'+esc(r.label)+'<time>'+fmtDate(r.t)+'</time></span><b>'+r.correct+'/'+r.total+' điểm</b></div>';
+    }).join("")+'</div><button class="linkbtn" data-act="clearHist">'+(S&&S.clearAsk?"Chạm lần nữa để xoá toàn bộ lịch sử":"Xoá lịch sử")+'</button>';
+  }
+  app.innerHTML=h+'</main>';
+  window.scrollTo(0,0);
+}
+function dockHtml(){
+  var n=S.items.filter(answered).length,t=S.items.length;
+  var inner;
+  if(S.confirming){
+    inner='<div class="confirm">Còn <b>'+(t-n)+'</b> câu chưa làm. Nộp bài luôn?</div><button class="btn" data-act="cancelSubmit">Làm tiếp</button><button class="btn primary" data-act="doSubmit">Nộp bài</button>';
+  }else{
+    inner='<div class="prog"><small>Đã làm '+n+'/'+t+' câu</small><div class="meter"><i style="width:'+(t?Math.round(n/t*100):0)+'%"></i></div></div><button class="btn primary" data-act="submit">Nộp bài</button>';
+  }
+  return '<div>'+inner+'</div>';
+}
+function barHtml(title,right){
+  return '<div class="bar"><div><button class="ghost" data-act="home">← Thoát</button><span class="t">'+esc(title)+'</span>'+right+'</div></div>';
+}
+function pyBtn(){return '<button class="chip'+(store.settings.pinyin?" on":"")+'" data-act="togglePy" aria-pressed="'+store.settings.pinyin+'">拼音</button>'}
+function quizView(){
+  view="quiz";
+  app.innerHTML=barHtml(S.label,pyBtn())+'<main class="wrap" id="list">'+listHtml(S.items)+'</main><footer class="dock" id="dock">'+dockHtml()+'</footer>';
+  window.scrollTo(0,0);
+}
+function submit(){
+  var res={correct:0,total:S.items.length,byPart:{}};
+  S.parts.forEach(function(p){res.byPart[p]={correct:0,total:0}});
+  S.items.forEach(function(it){
+    var bp=res.byPart[it.part];bp.total++;
+    if(isCorrect(it)){res.correct++;bp.correct++}
+  });
+  S.res=res;S.submitted=true;S.confirming=false;
+  store.history.unshift({t:Date.now(),label:S.label,correct:res.correct,total:res.total});
+  store.history=store.history.slice(0,8);
+  if(S.key){var b=store.best[S.key];if(!b||res.correct/res.total>b.score/b.total)store.best[S.key]={score:res.correct,total:res.total}}
+  saveStore();
+  filter="all";
+  resultView();
+}
+function resultView(){
+  view="result";
+  var r=S.res,wrong=S.items.filter(function(it){return !isCorrect(it)});
+  var pct=Math.round(r.correct/r.total*100);
+  var msg=pct>=90?"Xuất sắc!":pct>=75?"Làm tốt lắm":pct>=50?"Khá ổn, xem lại các câu sai bên dưới":"Cần ôn thêm, xem phần chữa bên dưới";
+  var h=barHtml("Kết quả · "+S.label,pyBtn().replace("拼音","拼音"))+'<main class="wrap"><div class="score"><div class="big">'+r.correct+'<small>/'+r.total+' điểm</small></div><div class="msg">'+msg+'</div><div class="vi" style="margin:0">Mỗi câu đúng được 1 điểm · '+pct+'%</div>';
+  if(S.parts.length>1){
+    h+='<div class="brk">'+S.parts.map(function(p){var b=r.byPart[p];return '<div class="brow"><span>Phần '+p+' · '+PARTS[p].name+'</span><b>'+b.correct+'/'+b.total+'</b><div class="meter"><i style="width:'+Math.round(b.correct/b.total*100)+'%"></i></div></div>'}).join("")+'</div>';
+  }
+  h+='</div><div class="acts">'+(wrong.length?'<button class="btn primary" data-act="retryWrong">Làm lại '+wrong.length+' câu sai</button>':"")+
+    '<button class="btn" data-act="retryAll">Làm lại từ đầu</button><button class="btn" data-act="home">Về trang chủ</button></div>';
+  h+='<div class="seg"><button class="chip'+(filter==="all"?" on":"")+'" data-act="filter" data-f="all">Tất cả ('+r.total+')</button><button class="chip'+(filter==="wrong"?" on":"")+'" data-act="filter" data-f="wrong">Câu sai ('+wrong.length+')</button><button class="chip'+(filter==="right"?" on":"")+'" data-act="filter" data-f="right">Câu đúng ('+(r.total-wrong.length)+')</button></div>';
+  var list=S.items.filter(function(it){var c=isCorrect(it);return filter==="all"||(filter==="wrong"?!c:c)});
+  h+=list.length?listHtml(list):'<div class="empty">'+(filter==="wrong"?"Không có câu sai. Làm rất tốt!":"Chưa có câu đúng nào.")+'</div>';
+  app.innerHTML=h+'</main>';
+  window.scrollTo(0,0);
+}
+
+/* ---------- điều khiển ---------- */
+function refreshCard(id){
+  var el=document.getElementById("q-"+id);
+  if(el)el.outerHTML=cardHtml(BYID[id]);
+  var d=document.getElementById("dock");
+  if(d)d.innerHTML=dockHtml();
+}
+function rerenderKeepScroll(){
+  var y=window.scrollY;
+  if(view==="quiz")quizView();else if(view==="result")resultView();
+  window.scrollTo(0,y);
+}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-act]");
+  if(!t)return;
+  var act=t.getAttribute("data-act"),id=t.getAttribute("data-id"),it=id?BYID[id]:null;
+  if(act==="pick"){
+    if(S.submitted)return;
+    var i=+t.getAttribute("data-i");S.ans[id]=i;S.confirming=false;refreshCard(id);
+  }else if(act==="place"){
+    if(S.submitted)return;S.ans[id].push(+t.getAttribute("data-i"));S.confirming=false;refreshCard(id);
+  }else if(act==="unplace"){
+    if(S.submitted)return;var k=S.ans[id].indexOf(+t.getAttribute("data-i"));if(k>=0)S.ans[id].splice(k,1);refreshCard(id);
+  }else if(act==="clear"){
+    S.ans[id]=[];refreshCard(id);
+  }else if(act==="fill"){
+    if(S.submitted)return;var w=t.getAttribute("data-w");
+    if(S.ans[id]===w)delete S.ans[id];else S.ans[id]=w;
+    S.confirming=false;refreshCard(id);
+  }else if(act==="submit"){
+    var left=S.items.filter(function(x){return !answered(x)}).length;
+    if(left>0){S.confirming=true;document.getElementById("dock").innerHTML=dockHtml()}else submit();
+  }else if(act==="cancelSubmit"){
+    S.confirming=false;document.getElementById("dock").innerHTML=dockHtml();
+  }else if(act==="doSubmit"){submit();
+  }else if(act==="togglePy"){
+    store.settings.pinyin=!store.settings.pinyin;saveStore();rerenderKeepScroll();
+  }else if(act==="home"){
+    S&&(S.clearAsk=false);homeView();
+  }else if(act==="startAll"){
+    makeSession([1,2,3,4],null,"Cả bài","all");quizView();
+  }else if(act==="startPart"){
+    var p=+t.getAttribute("data-p");makeSession([p],null,"Phần "+p+" · "+PARTS[p].name,"p"+p);quizView();
+  }else if(act==="retryAll"){
+    makeSession(S.parts,null,S.label.replace(/ \(.*$/,""),S.key);quizView();
+  }else if(act==="retryWrong"){
+    var ids=S.items.filter(function(x){return !isCorrect(x)}).map(function(x){return x.id});
+    var base=S.label.replace(/ \(.*$/,"");
+    makeSession(S.parts,ids,base+" (câu sai)",null);quizView();
+  }else if(act==="filter"){
+    filter=t.getAttribute("data-f");resultView();
+  }else if(act==="set"){
+    var k2=t.getAttribute("data-k");store.settings[k2]=!store.settings[k2];saveStore();
+    t.classList.toggle("on",store.settings[k2]);t.setAttribute("aria-checked",store.settings[k2]);
+  }else if(act==="clearHist"){
+    if(S&&S.clearAsk){store.history=[];store.best={};saveStore();S.clearAsk=false}
+    else{S=S||{};S.clearAsk=true}
+    homeView();
+  }
+});
+homeView();
+})();
+</script>
+
+</body>
+</html>
